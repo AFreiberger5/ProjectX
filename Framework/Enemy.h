@@ -11,7 +11,7 @@ public:
 		const char* _name,
 		Texture* _pSprite,
 		SDL_Rect _bounds,
-		EntityFlags _flags = EntityFlags::NONE);
+		Uint32 _flags = EntityFlags::NONE);
 	~Enemy();
 	
 	virtual void Render(Renderer* _pRenderer, SDL_Point _offset) override;

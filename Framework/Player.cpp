@@ -47,7 +47,7 @@ void Player::Update(Uint32 _dt)
 
 	// Temporäre Verlustbedingugn
 
-	if (GetBounds().x <= 400 && GetBounds().y <= 400)
+	/*if (GetBounds().x <= 400 && GetBounds().y <= 400)
 	{
 		if (!LoseTriggered)
 		{
@@ -64,7 +64,7 @@ void Player::Update(Uint32 _dt)
 
 		
 
-	}
+	}*/
 
 
 }

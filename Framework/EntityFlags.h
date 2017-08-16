@@ -9,6 +9,9 @@ enum EntityFlags
 	// Fuer die Entity werden Kollisionspruefungen gemacht.
 	CAN_COLLIDE		= 1, // 0001
 	// Gibt ab, dass die Update Methode aufgerufen werden soll.
-	SHOULD_UPDATE	= 2  // 0010
+	SHOULD_UPDATE	= 2 , // 0010
+
+	BOTH = CAN_COLLIDE | SHOULD_UPDATE
+	
 
 };

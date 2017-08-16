@@ -12,14 +12,14 @@ Enemy::Enemy(
 	const char* _name,
 	Texture* _pSprite,
 	SDL_Rect _bounds,
-	EntityFlags _flags)
-	:Entity(_name, _pSprite, _bounds, _flags)
+	Uint32 _flags)
+	:Entity(_name, _pSprite, _bounds, (EntityFlags)_flags)
 {
-	m_name = _name;
+	/*m_name = _name;
 	m_pSprite = _pSprite;
 	m_bounds = _bounds;
 	m_flags = _flags;
-	m_flags = EntityFlags::SHOULD_UPDATE;
+	*/
 	
 
 }

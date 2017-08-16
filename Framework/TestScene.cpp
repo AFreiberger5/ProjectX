@@ -43,7 +43,7 @@ void TestScene::update(Uint32 _dt)
 	{
 		if (pKevin)
 		{
-			AddEntity(new Enemy("Kevin", pKevin, boundsKevin, EntityFlags::SHOULD_UPDATE));
+			AddEntity(new Enemy("Kevin", pKevin, boundsKevin, EntityFlags::BOTH));
 
 			SpawnKevin.Restart();
 		}
@@ -53,7 +53,7 @@ void TestScene::update(Uint32 _dt)
 	{
 		if (pMattis)
 		{
-			AddEntity(new Enemy("Mattis", pMattis, boundsMattis, EntityFlags::SHOULD_UPDATE));
+			AddEntity(new Enemy("Mattis", pMattis, boundsMattis, EntityFlags::BOTH));
 
 			SpawnMattis.Restart();
 		}
@@ -63,7 +63,7 @@ void TestScene::update(Uint32 _dt)
 	{
 		if (pPit)
 		{
-			AddEntity(new Enemy("Pit", pPit, boundsPit, EntityFlags::SHOULD_UPDATE));
+			AddEntity(new Enemy("Pit", pPit, boundsPit, EntityFlags::BOTH));
 
 			SpawnPit.Restart();
 		}
@@ -115,7 +115,7 @@ void TestScene::update(Uint32 _dt)
 			boundsBeam.w = 80;
 			boundsBeam.h = 80;
 
-			AddEntity(m_pBeamObject = new Projectile("Beam", m_pBeam, boundsBeam));
+			AddEntity(m_pBeamObject = new Projectile("Beam", m_pBeam, boundsBeam, EntityFlags::CAN_COLLIDE));
 
 			m_pBeamObject->m_allowBounds.x = 0;
 			m_pBeamObject->m_allowBounds.y = 0;
@@ -211,7 +211,7 @@ void TestScene::load(Renderer* _pRenderer)
 
 
 
-	AddEntity(m_pFirst = new Player("Player", m_pPlayer, boundsPlayer));
+	AddEntity(m_pFirst = new Player("Player", m_pPlayer, boundsPlayer, EntityFlags::CAN_COLLIDE));
 
 	m_pFirst->m_allowBounds.x = 0;
 	m_pFirst->m_allowBounds.y = 0;
