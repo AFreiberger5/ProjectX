@@ -38,14 +38,20 @@
     <Filter Include="Object">
       <UniqueIdentifier>{75fc7907-bfd9-43a2-b748-e400fb898450}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Enemy">
-      <UniqueIdentifier>{00ee5c42-94e7-4a9d-9820-a43063936dd7}</UniqueIdentifier>
+    <Filter Include="Sprite">
+      <UniqueIdentifier>{85eb66f7-6601-46e0-90fb-e2a684b53428}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Animation">
+      <UniqueIdentifier>{b0052bdb-2647-4ea6-ada8-4272a55f3dc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IRenderable">
+      <UniqueIdentifier>{0829e57d-b49f-4cb8-a3fc-60b9da84151b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{136a4b2e-a600-464c-9480-c65c213a0b2e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Level">
-      <UniqueIdentifier>{9e423b40-2f8a-462b-b5b9-2882326387fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Projectile">
-      <UniqueIdentifier>{1622684d-6696-4f11-a74b-3ad82b57c74b}</UniqueIdentifier>
+      <UniqueIdentifier>{ad716a4c-10c6-40eb-8da8-5c955f31a543}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -84,14 +90,23 @@
     <ClCompile Include="Object.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Enemy</Filter>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Label.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="Level.cpp">
       <Filter>Level</Filter>
-    </ClCompile>
-    <ClCompile Include="Projectile.cpp">
-      <Filter>Projectile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -132,14 +147,20 @@
     <ClInclude Include="Object.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Enemy</Filter>
+    <ClInclude Include="Sprite.h">
+      <Filter>Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="IRenderable.h">
+      <Filter>IRenderable</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="Level.h">
       <Filter>Level</Filter>
-    </ClInclude>
-    <ClInclude Include="Projectile.h">
-      <Filter>Projectile</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

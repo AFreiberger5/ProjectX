@@ -5,7 +5,7 @@
 #include "Object.h"
 
 class Renderer;
-class Texture;
+class IRenderable;
 
 class Entity : public Object
 {
@@ -13,7 +13,7 @@ class Entity : public Object
 public:
 	Entity(
 		const char* _name, 
-		Texture* _pSprite,
+		IRenderable* _pRenderable,
 		SDL_Rect _bounds, 
 		EntityFlags _flags = EntityFlags::NONE);
 	virtual ~Entity();
@@ -30,11 +30,10 @@ public:
 	SDL_Rect GetCollisionRect() { return m_bounds; }
 	SDL_Rect& GetBounds() { return m_bounds; }
 
-
-protected:
+private:
 	const char* m_name;
 	EntityFlags m_flags;
-	Texture* m_pSprite;
+	IRenderable* m_pRenderable;
 	SDL_Rect m_bounds;
 
 };

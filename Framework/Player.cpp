@@ -1,14 +1,10 @@
 #include "Player.h"
-#include <iostream>
-#include "System.h"
-
-System s;
 
 Player::Player(const char* _name,
-	Texture* _pSprite,
+	IRenderable* _pRenderable,
 	SDL_Rect _bounds,
 	EntityFlags _flags)
-	: Entity(_name, _pSprite, _bounds, (EntityFlags)(_flags | EntityFlags::SHOULD_UPDATE))
+	: Entity(_name, _pRenderable, _bounds, (EntityFlags)(_flags | EntityFlags::SHOULD_UPDATE))
 {
 }
 
@@ -23,8 +19,6 @@ void Player::Update(Uint32 _dt)
 	// ..
 
 	// spieler in bounds halten
-
-
 	if (GetBounds().x < m_allowBounds.x)
 	{
 		GetBounds().x = m_allowBounds.x;
@@ -44,27 +38,4 @@ void Player::Update(Uint32 _dt)
 	{
 		GetBounds().y = m_allowBounds.y + m_allowBounds.h - GetBounds().h;
 	}
-
-	// Temporäre Verlustbedingugn
-
-	if (GetBounds().x <= 400 && GetBounds().y <= 400)
-	{
-		if (!LoseTriggered)
-		{
-			LoseTriggered = true;
-
-			s.clean();
-
-			std::cout << " KAFFE KEVIN ANGRY!!!" << std::endl;
-		}
-		
-		
-
-		
-
-		
-
-	}
-
-
 }

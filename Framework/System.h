@@ -4,8 +4,7 @@
 
 enum Key
 {
-	
-	ESC = 0, W = 1, A = 2, S = 3, D = 4,  SPACE = 5, F3 = 6,  COUNT = 7
+	ESC = 0, W = 1, A = 2, S = 3, D = 4, F3 = 5, RETURN = 6, COUNT = 7
 };
 
 class Scene;
@@ -33,8 +32,6 @@ public:
 
 	std::string GetFPS(bool _addDesired = false);
 	std::string GetTPS(bool _addDesired = false);
-	SDL_Window* m_pWindow;
-	Renderer* m_pRenderer;
 
 private:
 	void render();
@@ -44,6 +41,8 @@ private:
 private:
 	DebugOverlay* m_pDebug;
 	bool m_debugEnabled;
+	SDL_Window* m_pWindow;
+	Renderer* m_pRenderer;
 	Scene* m_pScene;
 
 	bool m_keyState[Key::COUNT];
