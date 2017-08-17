@@ -1,10 +1,15 @@
 #include "Enemy.h"
 #include "TestScene.h"
 #include "Renderer.h"
+#include "Scene.h"
+#include <iostream>
 
 
 
 
+
+
+class Scene;
 
 
 
@@ -55,6 +60,18 @@ void Enemy::Update(Uint32 _dt)
 
 
 
+}
+
+void Enemy::OnCollision(Entity * _other)
+{
+	
+
+	if (Projectile* pro = dynamic_cast<Projectile*>(_other))
+	{
+		m_currentScene->RemoveEntity(this);
+
+		
+	}
 }
 
 

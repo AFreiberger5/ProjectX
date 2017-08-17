@@ -14,8 +14,8 @@ Scene::~Scene()
 void Scene::render(Renderer* _pRenderer)
 {
 	for (auto itr = m_entitiesToRender.begin();
-			itr != m_entitiesToRender.end();
-			++itr)
+		itr != m_entitiesToRender.end();
+		++itr)
 	{
 		(*itr)->Render(_pRenderer, m_offset);
 	}
@@ -24,13 +24,44 @@ void Scene::render(Renderer* _pRenderer)
 void Scene::update(Uint32 _dt)
 {
 	for (auto itr = m_entitiesToUpdate.begin();
-			itr != m_entitiesToUpdate.end();
-			++itr)
+		itr != m_entitiesToUpdate.end();
+		++itr)
 	{
 		(*itr)->Update(_dt);
 	}
 
 	CheckCollisions();
+
+	for (auto itr = m_entitiesToAdd.begin();
+		itr != m_entitiesToAdd.end();
+		++itr)
+	{
+		m_entitiesToRender.push_back(*itr);
+
+		if ((*itr)->HasFlag(EntityFlags::SHOULD_UPDATE))
+			m_entitiesToUpdate.push_back(*itr);
+
+		if ((*itr)->HasFlag(EntityFlags::CAN_COLLIDE))
+			m_entitiesToCollide.push_back(*itr);
+		(*itr)->SetScene(this);
+	}
+
+	for (auto itr = m_entitiesToRemove.begin();
+		itr != m_entitiesToRemove.end();
+		++itr)
+	{
+		m_entitiesToRender.remove(*itr);
+
+		if ((*itr)->HasFlag(EntityFlags::SHOULD_UPDATE))
+			m_entitiesToUpdate.remove(*itr);
+
+		if ((*itr)->HasFlag(EntityFlags::CAN_COLLIDE))
+			m_entitiesToCollide.remove(*itr);
+		(*itr)->SetScene(this);
+
+	}
+	m_entitiesToRemove.clear();
+	m_entitiesToAdd.clear();
 }
 
 void Scene::CheckCollisions()
@@ -41,7 +72,7 @@ void Scene::CheckCollisions()
 	{
 		// aktuelle entity muss nicht noch mal geprueft werden
 		toCheck.remove(*itr);
-		
+
 		// alle entities welche noch nicht geprueft wurden checken
 		for (auto itr2 = toCheck.begin(); itr2 != toCheck.end(); ++itr2)
 		{
@@ -71,18 +102,13 @@ void Scene::unload()
 
 void Scene::AddEntity(Entity* _pEntity)
 {
-	m_entitiesToRender.push_back(_pEntity);
-
-	if (_pEntity->HasFlag(EntityFlags::SHOULD_UPDATE))
-		m_entitiesToUpdate.push_back(_pEntity);
-
-	if (_pEntity->HasFlag(EntityFlags::CAN_COLLIDE))
-		m_entitiesToCollide.push_back(_pEntity);
+	m_entitiesToAdd.push_back(_pEntity);
 }
 
 void Scene::RemoveEntity(Entity* _pEntity)
 {
-	m_entitiesToRender.remove(_pEntity);
-	m_entitiesToUpdate.remove(_pEntity);
-	m_entitiesToCollide.remove(_pEntity);
+	m_entitiesToRemove.push_back(_pEntity);
+	//m_entitiesToRender.remove(_pEntity);
+	//m_entitiesToUpdate.remove(_pEntity);
+	//m_entitiesToCollide.remove(_pEntity);
 }

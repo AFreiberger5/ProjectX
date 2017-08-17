@@ -24,12 +24,14 @@ public:
 	virtual void unload();
 
 	void AddEntity(Entity* _pEntity);
-	void RemoveEntity(Entity* _pEntity);
+	 void  RemoveEntity(Entity* _pEntity);
 
 protected:
 	EntityList m_entitiesToRender;
 	EntityList m_entitiesToUpdate;
 	EntityList m_entitiesToCollide;
+	EntityList m_entitiesToAdd;
+	EntityList m_entitiesToRemove;
 
 	SDL_Point m_offset;
 	System* m_pSystem;

@@ -1,5 +1,7 @@
 #include "Entity.h"
 #include "Renderer.h"
+#include "Scene.h"
+
 
 Entity::Entity(
 	const char* _name,
@@ -14,6 +16,7 @@ Entity::Entity(
 Entity::~Entity()
 {
 }
+
 
 void Entity::Render(Renderer* _pRenderer, SDL_Point _offset)
 {
@@ -39,4 +42,10 @@ void Entity::SetFlag(EntityFlags _flag, bool _state)
 bool Entity::HasFlag(EntityFlags _flag)
 {
 	return m_flags & _flag;
+}
+
+void Entity::SetScene(Scene * _currentScene)
+{
+	m_currentScene = _currentScene;
+
 }

@@ -115,7 +115,7 @@ void TestScene::update(Uint32 _dt)
 			boundsBeam.w = 80;
 			boundsBeam.h = 80;
 
-			AddEntity(m_pBeamObject = new Projectile("Beam", m_pBeam, boundsBeam, EntityFlags::CAN_COLLIDE));
+			AddEntity(m_pBeamObject = new Projectile("Beam", m_pBeam, boundsBeam, EntityFlags::BOTH));
 
 			m_pBeamObject->m_allowBounds.x = 0;
 			m_pBeamObject->m_allowBounds.y = 0;
@@ -123,6 +123,8 @@ void TestScene::update(Uint32 _dt)
 			m_pBeamObject->m_allowBounds.h = 600;
 
 			m_FireWaitingTime = 0;
+
+			
 		}
 
 

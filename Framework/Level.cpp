@@ -4,7 +4,7 @@ Level::Level(const char* _name,
 	Texture* _pSprite,
 	SDL_Rect _bounds,
 	EntityFlags _flags)
-	: Entity(_name, _pSprite, _bounds, (EntityFlags)(_flags | EntityFlags::SHOULD_UPDATE))
+	: Entity(_name,  _pSprite,  _bounds, (EntityFlags)(_flags | EntityFlags::SHOULD_UPDATE))
 {
 }
 
