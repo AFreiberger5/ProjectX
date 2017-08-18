@@ -8,7 +8,7 @@ class Level : public Entity
 public:
 	Level(
 		const char* _name,
-		Texture* _pSprite,
+		IRenderable* _pRenderable,
 		SDL_Rect _bounds,
 		EntityFlags _flags = EntityFlags::NONE);
 	~Level();

@@ -69,8 +69,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)Libraries\SDL_image\include;$(SolutionDir)Libraries\SDL_ttf\include;$(SolutionDir)Libraries\SDL\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Libraries\SDL_image\lib\$(PlatformShortName);$(SolutionDir)Libraries\SDL_ttf\lib\$(PlatformShortName);$(SolutionDir)Libraries\SDL\lib\$(PlatformShortName);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Libraries\SDL_image\include;$(SolutionDir)Libraries\SDL_ttf\include;$(SolutionDir)Libraries\SDL\include;$(SolutionDir)Libraries\SDL2_mixer\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Libraries\SDL_image\lib\$(PlatformShortName);$(SolutionDir)Libraries\SDL_ttf\lib\$(PlatformShortName);$(SolutionDir)Libraries\SDL2_mixer\lib\$(PlatformShortName);$(SolutionDir)Libraries\SDL\lib\$(PlatformShortName);$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)Build\bin\$(PlatformShortName)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -79,8 +79,8 @@
     <OutDir>$(SolutionDir)Build\bin\$(PlatformShortName)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)Libraries\SDL_image\include;$(SolutionDir)Libraries\SDL_ttf\include;$(SolutionDir)Libraries\SDL\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Libraries\SDL_image\lib\$(PlatformShortName);$(SolutionDir)Libraries\SDL_ttf\lib\$(PlatformShortName);$(SolutionDir)Libraries\SDL\lib\$(PlatformShortName);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Libraries\SDL_image\include;$(SolutionDir)Libraries\SDL_ttf\include;$(SolutionDir)Libraries\SDL\include;$(SolutionDir)Libraries\SDL2_mixer\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Libraries\SDL_image\lib\$(PlatformShortName);$(SolutionDir)Libraries\SDL_ttf\lib\$(PlatformShortName);$(SolutionDir)Libraries\SDL2_mixer\lib\$(PlatformShortName);$(SolutionDir)Libraries\SDL\lib\$(PlatformShortName);$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)Build\bin\$(PlatformShortName)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -97,12 +97,16 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /d /y "$(SolutionDir)Libraries\SDL\lib\$(PlatformShortName)\*.dll" "$(OutDir)"
+
 xcopy /d /y "$(SolutionDir)Libraries\SDL_image\lib\$(PlatformShortName)\*.dll" "$(OutDir)"
-xcopy /d /y "$(SolutionDir)Libraries\SDL_ttf\lib\$(PlatformShortName)\*.dll" "$(OutDir)"</Command>
+
+xcopy /d /y "$(SolutionDir)Libraries\SDL_ttf\lib\$(PlatformShortName)\*.dll" "$(OutDir)"
+xcopy /d /y "$(SolutionDir)Libraries\SDL2_mixer\lib\$(PlatformShortName)\*.dll" "$(OutDir)"
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -114,12 +118,16 @@ xcopy /d /y "$(SolutionDir)Libraries\SDL_ttf\lib\$(PlatformShortName)\*.dll" "$(
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /d /y "$(SolutionDir)Libraries\SDL\lib\$(PlatformShortName)\*.dll" "$(OutDir)"
+
 xcopy /d /y "$(SolutionDir)Libraries\SDL_image\lib\$(PlatformShortName)\*.dll" "$(OutDir)"
-xcopy /d /y "$(SolutionDir)Libraries\SDL_ttf\lib\$(PlatformShortName)\*.dll" "$(OutDir)"</Command>
+
+xcopy /d /y "$(SolutionDir)Libraries\SDL_ttf\lib\$(PlatformShortName)\*.dll" "$(OutDir)"
+xcopy /d /y "$(SolutionDir)Libraries\SDL2_mixer\lib\$(PlatformShortName)\*.dll" "$(OutDir)"
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -165,11 +173,13 @@ xcopy /d /y "$(SolutionDir)Libraries\SDL_ttf\lib\$(PlatformShortName)\*.dll" "$(
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="common.cpp" />
     <ClCompile Include="DebugOverlay.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Font.cpp" />
+    <ClCompile Include="Label.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -181,6 +191,7 @@ xcopy /d /y "$(SolutionDir)Libraries\SDL_ttf\lib\$(PlatformShortName)\*.dll" "$(
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h" />
@@ -199,6 +210,7 @@ xcopy /d /y "$(SolutionDir)Libraries\SDL_ttf\lib\$(PlatformShortName)\*.dll" "$(
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="UI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

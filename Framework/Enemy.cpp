@@ -15,10 +15,10 @@ class Scene;
 
 Enemy::Enemy(
 	const char* _name,
-	Texture* _pSprite,
+	IRenderable* _pRenderable,
 	SDL_Rect _bounds,
 	Uint32 _flags)
-	:Entity(_name, _pSprite, _bounds, (EntityFlags)_flags)
+	:Entity(_name, _pRenderable, _bounds, (EntityFlags)_flags)
 {
 	/*m_name = _name;
 	m_pSprite = _pSprite;
@@ -43,7 +43,7 @@ void Enemy::Render(Renderer* _pRenderer, SDL_Point _offset)
 	bounds.x -= _offset.x;
 	bounds.y += _offset.y;
 	
-	_pRenderer->DrawTexture(m_pSprite, bounds);
+	_pRenderer->Draw(m_pRenderable, bounds);
 }
 
 void Enemy::Update(Uint32 _dt)

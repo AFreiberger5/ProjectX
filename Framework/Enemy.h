@@ -5,13 +5,14 @@
 
 class Renderer;
 class Texture;
+class IRenderable;
 
 class Enemy : public Entity
 {
 public:
 	Enemy(
 		const char* _name,
-		Texture* _pSprite,
+		IRenderable* _pRenderable,
 		SDL_Rect _bounds,
 		Uint32 _flags = EntityFlags::NONE);
 	~Enemy();

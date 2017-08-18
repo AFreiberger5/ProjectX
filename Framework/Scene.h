@@ -6,11 +6,14 @@
 class System;
 class Entity;
 class Renderer;
+class UI;
 
 typedef std::list<Entity*> EntityList;
 
 class Scene
 {
+
+	friend class System;
 
 public:
 	Scene(System* _pSystem);
@@ -24,7 +27,7 @@ public:
 	virtual void unload();
 
 	void AddEntity(Entity* _pEntity);
-	 void  RemoveEntity(Entity* _pEntity);
+	void RemoveEntity(Entity* _pEntity);
 
 protected:
 	EntityList m_entitiesToRender;
@@ -33,6 +36,7 @@ protected:
 	EntityList m_entitiesToAdd;
 	EntityList m_entitiesToRemove;
 
+	UI* m_pUI;
 	SDL_Point m_offset;
 	System* m_pSystem;
 

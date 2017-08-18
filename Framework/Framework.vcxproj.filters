@@ -93,6 +93,15 @@
     <ClCompile Include="Projectile.cpp">
       <Filter>Projectile</Filter>
     </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>DebugOverlay</Filter>
+    </ClCompile>
+    <ClCompile Include="Label.cpp">
+      <Filter>DebugOverlay</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>DebugOverlay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -140,6 +149,9 @@
     </ClInclude>
     <ClInclude Include="Projectile.h">
       <Filter>Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>DebugOverlay</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

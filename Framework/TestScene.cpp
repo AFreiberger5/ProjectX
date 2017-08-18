@@ -7,12 +7,16 @@
 #include "Renderer.h"
 #include "Timer.h"
 #include "Enemy.h"
+#include "Sprite.h"
+#include "Animation.h"
+#include "UI.h"
 #include "Level.h"
 #include "Projectile.h"
+#define CREATE_SPRITE_FROM_SHEET(SHEET, X, Y, W, H) new Sprite(SHEET, X * W, Y * H, W, H)
 #include <iostream>
 
 System s2;
-
+UIElement* pLabel;
 
 TestScene::TestScene(System* _pSystem)
 	: Scene(_pSystem)
@@ -109,7 +113,7 @@ void TestScene::update(Uint32 _dt)
 	{
 		if (m_FireWaitingTime >= m_FireDelay)
 		{
-			
+
 			boundsBeam.x = m_pFirst->GetBounds().x + 15;
 			boundsBeam.y = m_pFirst->GetBounds().y - 50;
 			boundsBeam.w = 80;
@@ -124,7 +128,7 @@ void TestScene::update(Uint32 _dt)
 
 			m_FireWaitingTime = 0;
 
-			
+
 		}
 
 
@@ -138,12 +142,13 @@ void TestScene::render(Renderer* _pRenderer)
 {
 	Scene::render(_pRenderer);
 
-	
+
 }
 
 void TestScene::load(Renderer* _pRenderer)
 {
-	
+	m_pFont = new Font(getAssetPath("Fonts/comic.ttf").c_str(), 12);
+
 #pragma region EnemySection
 	//Enemy section
 
@@ -152,13 +157,13 @@ void TestScene::load(Renderer* _pRenderer)
 	boundsKevin.w = 200;
 	boundsKevin.h = 200;
 
-	
+
 	boundsMattis.x = 0;
 	boundsMattis.y = 100;
 	boundsMattis.w = 100;
 	boundsMattis.h = 100;
 
-	
+
 	boundsPit.x = 0;
 	boundsPit.y = 100;
 	boundsPit.w = 150;
@@ -181,16 +186,16 @@ void TestScene::load(Renderer* _pRenderer)
 #pragma endregion
 
 #pragma region LevelSection
-	pSpace = new Texture(_pRenderer, getAssetPath("Images/space.png").c_str());
+	Texture* pSpace = new Texture(_pRenderer, getAssetPath("Images/space.png").c_str());
 
 
-	
+	SDL_Rect boundsBack1;
 	boundsBack1.w = 800;
 	boundsBack1.h = 1024;
 	boundsBack1.x = 0;
 	boundsBack1.y = -424;
 
-	
+	SDL_Rect boundsBack2;
 	boundsBack2.w = 800;
 	boundsBack2.h = 1024;
 	boundsBack2.x = 0;
@@ -203,8 +208,18 @@ void TestScene::load(Renderer* _pRenderer)
 	m_pBeam = new Texture(_pRenderer, getAssetPath("Images/beam.png").c_str());
 	m_pPlayer = new Texture(_pRenderer, getAssetPath("Images/Player.png").c_str());
 
+	m_pUI = new UI();
 
-
+	SDL_Color col;
+	col.a = 255;
+	col.r = 255;
+	col.g = 255;
+	col.b = 255;
+	Label* pLabel = new Label(m_pFont, "Hello World", col);
+	pLabel->m_bounds.x = 5;
+	pLabel->m_bounds.y = 15;
+	 
+	m_pUI->Add(pLabel);
 	SDL_Rect boundsPlayer;
 	boundsPlayer.x = 350;
 	boundsPlayer.y = 600;
@@ -214,6 +229,7 @@ void TestScene::load(Renderer* _pRenderer)
 
 
 	AddEntity(m_pFirst = new Player("Player", m_pPlayer, boundsPlayer, EntityFlags::CAN_COLLIDE));
+
 
 	m_pFirst->m_allowBounds.x = 0;
 	m_pFirst->m_allowBounds.y = 0;
@@ -225,4 +241,6 @@ void TestScene::unload()
 {
 	SAFE_DELETE(m_pSpace1);
 	SAFE_DELETE(m_pSpace2);
+
+	SAFE_DELETE(m_pFont);
 }
