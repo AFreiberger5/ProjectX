@@ -1,6 +1,7 @@
 #include "Player.h"
 #include <iostream>
 #include "System.h"
+#include "Enemy.h"
 
 System s;
 
@@ -67,4 +68,14 @@ void Player::Update(Uint32 _dt)
 	}*/
 
 
+}
+
+void Player::OnCollision(Entity * _other)
+{
+	if (Enemy* eny = dynamic_cast<Enemy*>(_other))
+	{
+		m_currentScene->RemoveEntity(this);
+
+
+	}
 }
