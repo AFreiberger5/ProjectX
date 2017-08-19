@@ -1,5 +1,6 @@
 #include "Entity.h"
 #include "Renderer.h"
+#include "Scene.h"
 #include "Sprite.h"
 
 Entity::Entity(
@@ -9,12 +10,13 @@ Entity::Entity(
 	EntityFlags _flags)
 	: m_name(_name), m_pRenderable(_pRenderable), m_bounds(_bounds), m_flags(_flags), Object()
 {
-
+	
 }
 
 Entity::~Entity()
 {
 }
+
 
 void Entity::Render(Renderer* _pRenderer, SDL_Point _offset)
 {
@@ -40,4 +42,10 @@ void Entity::SetFlag(EntityFlags _flag, bool _state)
 bool Entity::HasFlag(EntityFlags _flag)
 {
 	return m_flags & _flag;
+}
+
+void Entity::SetScene(Scene * _currentScene)
+{
+	m_currentScene = _currentScene;
+
 }

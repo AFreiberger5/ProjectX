@@ -33,6 +33,8 @@ protected:
 	EntityList m_entitiesToRender;
 	EntityList m_entitiesToUpdate;
 	EntityList m_entitiesToCollide;
+	EntityList m_entitiesToAdd;
+	EntityList m_entitiesToRemove;
 
 	UI* m_pUI;
 	SDL_Point m_offset;

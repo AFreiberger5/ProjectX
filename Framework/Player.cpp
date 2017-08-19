@@ -1,4 +1,9 @@
 #include "Player.h"
+#include <iostream>
+#include "System.h"
+#include "Enemy.h"
+
+System s;
 
 Player::Player(const char* _name,
 	IRenderable* _pRenderable,
@@ -19,6 +24,8 @@ void Player::Update(Uint32 _dt)
 	// ..
 
 	// spieler in bounds halten
+
+
 	if (GetBounds().x < m_allowBounds.x)
 	{
 		GetBounds().x = m_allowBounds.x;
@@ -37,5 +44,38 @@ void Player::Update(Uint32 _dt)
 	if ((GetBounds().y + GetBounds().h) > (m_allowBounds.y + m_allowBounds.h))
 	{
 		GetBounds().y = m_allowBounds.y + m_allowBounds.h - GetBounds().h;
+	}
+
+	// Temporäre Verlustbedingugn
+
+	/*if (GetBounds().x <= 400 && GetBounds().y <= 400)
+	{
+		if (!LoseTriggered)
+		{
+			LoseTriggered = true;
+
+			s.clean();
+
+			std::cout << " KAFFE KEVIN ANGRY!!!" << std::endl;
+		}
+		
+		
+
+		
+
+		
+
+	}*/
+
+
+}
+
+void Player::OnCollision(Entity * _other)
+{
+	if (Enemy* eny = dynamic_cast<Enemy*>(_other))
+	{
+		m_currentScene->RemoveEntity(this);
+
+
 	}
 }

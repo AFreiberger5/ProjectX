@@ -1,5 +1,7 @@
 #include "common.h"
 #include "System.h"
+#include "Scene1.h"
+#include "Scene2.h"
 #include "TestScene.h"
 #include "Texture.h"
 
@@ -12,7 +14,8 @@ int main(int argc, char *argv[])
 	if (s.init() && s.load())
 	{
 		// testszene laden
-		TestScene scene = TestScene(&s);
+		//TestScene scene = TestScene(&s);
+		Scene1 scene = Scene1(&s);
 		s.changeScene(&scene);
 
 		// programm ausfuehren

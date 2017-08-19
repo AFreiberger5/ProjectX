@@ -1,6 +1,6 @@
 #include "Level.h"
 
-#pragma region A.Blomenkamp
+
 
 Level::Level(
 	const char* _name,
@@ -19,5 +19,3 @@ void Level::Update(Uint32 _dt)
 {
 
 }
-
-#pragma endregion
