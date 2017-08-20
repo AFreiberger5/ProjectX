@@ -53,10 +53,9 @@ void Scene2::update(Uint32 _dt)
 
 	if (m_pSystem->IsKeyPressed(Key::RETURN))
 	{
-		TestScene _x = TestScene(m_pSystem);
-		m_pSystem->m_shouldStop = true;
-
-		m_pSystem->changeScene(&_x);
+		TestScene* _x = new TestScene(m_pSystem);
+		m_pSystem->m_pScene = _x;
+		m_pSystem->changeScene(_x);
 		
 	}
 

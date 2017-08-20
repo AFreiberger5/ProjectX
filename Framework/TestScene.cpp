@@ -16,8 +16,8 @@
 #define CREATE_SPRITE_FROM_SHEET(SHEET, X, Y, W, H) new Sprite(SHEET, X * W, Y * H, W, H)
 #include <iostream>
 
-// Kann vermutlich rausgeschmissen werden, vermutlich überbleibles aus altem framework
-System s2;
+
+
 
 
 UIElement* pLabel;
@@ -38,8 +38,9 @@ void TestScene::update(Uint32 _dt)
 {
 	if (WinTimer.TicksTicked() >= 30000)
 	{
-		Scene2 _y = Scene2(m_pSystem);
-		m_pSystem->changeScene(&_y);
+		Scene2* _y = new Scene2(m_pSystem);
+		m_pSystem->m_pScene = _y;
+		m_pSystem->changeScene(_y);
 		
 	}
 
