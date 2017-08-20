@@ -50,11 +50,12 @@ void Scene2::update(Uint32 _dt)
 #pragma endregion
 
 #pragma region Controlls
+	Scene::update(_dt);
 
 	if (m_pSystem->IsKeyPressed(Key::RETURN))
 	{
 		TestScene* _x = new TestScene(m_pSystem);
-		m_pSystem->m_pScene = _x;
+		//m_pSystem->m_pScene = _x;
 		m_pSystem->changeScene(_x);
 		
 	}
@@ -66,7 +67,6 @@ void Scene2::update(Uint32 _dt)
 	}
 
 #pragma endregion
-	Scene::update(_dt);
 }
 
 void Scene2::render(Renderer* _pRenderer)
@@ -148,6 +148,6 @@ void Scene2::unload()
 {
 	SAFE_DELETE(m_pSpace1);
 	SAFE_DELETE(m_pSpace2);
-
+	SAFE_DELETE(m_pUI);
 	SAFE_DELETE(m_pFont);
 }

@@ -36,13 +36,6 @@ TestScene::~TestScene()
 
 void TestScene::update(Uint32 _dt)
 {
-	if (WinTimer.TicksTicked() >= 30000)
-	{
-		Scene2* _y = new Scene2(m_pSystem);
-		m_pSystem->m_pScene = _y;
-		m_pSystem->changeScene(_y);
-		
-	}
 
 
 	m_FireWaitingTime += _dt;
@@ -82,16 +75,18 @@ void TestScene::update(Uint32 _dt)
 #pragma endregion
 
 #pragma region Backgroundmovement
-	m_pSpace1->GetBounds().y += _dt / 4;
-	m_pSpace2->GetBounds().y += _dt / 4;
+	if (m_pSpace1 && m_pSpace2 != nullptr) {
+		m_pSpace1->GetBounds().y += _dt / 4;
+		m_pSpace2->GetBounds().y += _dt / 4;
 
-	if (m_pSpace1->GetBounds().y >= 600) {
-		m_pSpace1->GetBounds().y = m_pSpace2->GetBounds().y - 1024;
-	}
+		if (m_pSpace1->GetBounds().y >= 600) {
+			m_pSpace1->GetBounds().y = m_pSpace2->GetBounds().y - 1024;
+		}
 
-	if (m_pSpace2->GetBounds().y >= 600) {
-		m_pSpace2->GetBounds().y = m_pSpace1->GetBounds().y - 1024;
-	}
+		if (m_pSpace2->GetBounds().y >= 600) {
+			m_pSpace2->GetBounds().y = m_pSpace1->GetBounds().y - 1024;
+		}
+			}
 #pragma endregion
 
 #pragma region Controlls
@@ -142,6 +137,13 @@ void TestScene::update(Uint32 _dt)
 
 #pragma endregion
 	Scene::update(_dt);
+
+	if (WinTimer.TicksTicked() >= 30000)
+	{
+		Scene2* _y = new Scene2(m_pSystem);
+		m_pSystem->changeScene(_y);
+		
+	}
 }
 
 //void TestScene::render(Renderer* _pRenderer)
@@ -214,18 +216,7 @@ void TestScene::load(Renderer* _pRenderer)
 	m_pBeam = new Texture(_pRenderer, getAssetPath("Images/beam.png").c_str());
 	m_pPlayer = new Texture(_pRenderer, getAssetPath("Images/Player.png").c_str());
 
-	m_pUI = new UI();
 
-	SDL_Color col;
-	col.a = 255;
-	col.r = 255;
-	col.g = 255;
-	col.b = 255;
-	Label* pLabel = new Label(m_pFont, "Hello World", col);
-	pLabel->m_bounds.x = 5;
-	pLabel->m_bounds.y = 15;
-	 
-	m_pUI->Add(pLabel);
 	SDL_Rect boundsPlayer;
 	boundsPlayer.x = 350;
 	boundsPlayer.y = 600;
@@ -245,8 +236,18 @@ void TestScene::load(Renderer* _pRenderer)
 
 void TestScene::unload()
 {
-	SAFE_DELETE(m_pSpace1);
-	SAFE_DELETE(m_pSpace2);
-
+	for each (Entity* pEntity in m_entitiesToAdd, m_entitiesToCollide, m_entitiesToRemove, m_entitiesToRender, m_entitiesToUpdate)
+	{
+		RemoveEntity(pEntity);
+		delete pEntity;
+	}
+	
+	SAFE_DELETE(pKevin);
+	SAFE_DELETE(pMattis);
+	SAFE_DELETE(pPit);
+	SAFE_DELETE(m_pBeam);
+	SAFE_DELETE(m_pPlayer);
 	SAFE_DELETE(m_pFont);
+	//SAFE_DELETE(m_pSpace1);
+	//SAFE_DELETE(m_pSpace2);
 }
