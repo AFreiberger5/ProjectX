@@ -16,7 +16,10 @@
 #define CREATE_SPRITE_FROM_SHEET(SHEET, X, Y, W, H) new Sprite(SHEET, X * W, Y * H, W, H)
 #include <iostream>
 
+// Kann vermutlich rausgeschmissen werden, vermutlich überbleibles aus altem framework
 System s2;
+
+
 UIElement* pLabel;
 
 TestScene::TestScene(System* _pSystem)
@@ -140,12 +143,12 @@ void TestScene::update(Uint32 _dt)
 	Scene::update(_dt);
 }
 
-void TestScene::render(Renderer* _pRenderer)
-{
-	Scene::render(_pRenderer);
-
-
-}
+//void TestScene::render(Renderer* _pRenderer)
+//{
+//	Scene::render(_pRenderer);
+//
+//
+//}
 
 void TestScene::load(Renderer* _pRenderer)
 {

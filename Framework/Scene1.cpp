@@ -39,17 +39,19 @@ void Scene1::update(Uint32 _dt)
 
 	if (m_pSystem->IsKeyPressed(Key::RETURN))
 	{
-		m_pSystem->m_shouldStop = true;
-		TestScene _x = TestScene(m_pSystem);
-		m_pSystem->m_pScene = &_x;
-		m_pSystem->changeScene(&_x);
-
+		m_pSystem->m_shouldStop = true; 
+		TestScene* _x =new  TestScene(m_pSystem);
+		
+		m_pSystem->m_pScene = _x;
+		m_pSystem->changeScene(_x);
+		//Old Scene still needs to be deleted
 	}
 
 	if (m_pSystem->IsKeyPressed(Key::ESC))
 	{
 		m_pSystem->clean();
-
+		
+		
 	}
 
 #pragma endregion
@@ -116,7 +118,12 @@ void Scene1::load(Renderer* _pRenderer)
 
 void Scene1::unload()
 {
-	
+	EntityList toRemove = m_entitiesToRender;
+	for each (Entity* pEntity in toRemove)
+	{
+		RemoveEntity(pEntity);
+		delete pEntity;
+	}
 
 	SAFE_DELETE(m_pFont);
 }

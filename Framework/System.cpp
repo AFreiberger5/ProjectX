@@ -22,7 +22,7 @@ bool System::init()
 {
 	// SDL Initialisieren, und wenn der Rueckgabewert kleiner 0 ist, ist ein Fehler aufgetreten
 	HANDLE_ERROR(SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO) < 0);
-	
+
 	// Image Plugin Initialisieren, und wenn der Rueckgabewert kleiner 0 ist, ist ein Fehler aufgetreten
 	HANDLE_ERROR(IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG) < 0);
 
@@ -38,7 +38,7 @@ bool System::init()
 		800,					// Breite
 		600,					// Hoehe
 		SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE		// Extra Flags
-		);
+	);
 
 	HANDLE_ERROR(m_pWindow == nullptr);
 
@@ -79,9 +79,9 @@ void System::run()
 			tickTimer.Restart();
 			input();
 			update(dt);
-			ticks++;			
+			ticks++;
 		}
-		
+
 		Uint32 df = renderTimer.TicksTicked();
 		if (df >= (1000 / m_desiredFPS))
 		{
@@ -116,12 +116,21 @@ void System::clean()
 	}
 
 	// SDL stoppen und aufraeumen
+	if (m_pScene)
+	{
+		m_pScene->unload();
+		m_pScene = nullptr;
+	}
+
+
 	SDL_Quit();
+
+
 }
 
 void System::changeScene(Scene* _pNewScene)
 {
-	if(m_pScene) m_pScene->unload();
+	if (m_pScene) m_pScene->unload();
 	m_pScene = _pNewScene;
 	if (m_pScene)
 	{
@@ -147,10 +156,16 @@ bool System::WasKeyReleased(Key _key) const
 void System::render()
 {
 	// das bild clearen
-	m_pRenderer->BeginFrame();
+	if (m_pRenderer != nullptr)
+	{
+		m_pRenderer->BeginFrame();
+	}
 
 	// die scene rendern
-	m_pScene->render(m_pRenderer);
+	if (m_pScene != nullptr && m_pRenderer != nullptr)
+	{
+		m_pScene->render(m_pRenderer);
+	}
 
 	if (m_debugEnabled)
 	{
@@ -159,7 +174,12 @@ void System::render()
 	}
 
 	// geaenderte fenster oberflaeche an die graka schicken zur anzeige
-	m_pRenderer->FinishFrame();
+
+	if (m_pRenderer != nullptr)
+	{
+		m_pRenderer->FinishFrame();
+	}
+
 }
 
 void System::update(Uint32 _dt)
@@ -198,44 +218,44 @@ void System::input()
 		switch (e.type)
 		{
 			// bei einem quit event das flag zum beenden setzten
-			case SDL_EventType::SDL_QUIT:
-				m_shouldStop = true;
-				break;
+		case SDL_EventType::SDL_QUIT:
+			m_shouldStop = true;
+			break;
 
-			case SDL_EventType::SDL_MOUSEBUTTONUP:
-			case SDL_EventType::SDL_MOUSEBUTTONDOWN:
-				if (m_pScene->m_pUI)
-				{
-					SDL_Point p;
-					p.x = e.button.x;
-					p.y = e.button.y;
-					m_pScene->m_pUI->OnMouseChanged(p, e.button.state == SDL_PRESSED);
-				}
-				break;
-			case SDL_EventType::SDL_MOUSEMOTION:
-				if (m_pScene->m_pUI)
-				{
-					SDL_Point p;
-					p.x = e.motion.x;
-					p.y = e.motion.y;
-					m_pScene->m_pUI->OnMouseChanged(p, e.motion.state == SDL_PRESSED);
-				}
-				break;
+		case SDL_EventType::SDL_MOUSEBUTTONUP:
+		case SDL_EventType::SDL_MOUSEBUTTONDOWN:
+			if (m_pScene->m_pUI)
+			{
+				SDL_Point p;
+				p.x = e.button.x;
+				p.y = e.button.y;
+				m_pScene->m_pUI->OnMouseChanged(p, e.button.state == SDL_PRESSED);
+			}
+			break;
+		case SDL_EventType::SDL_MOUSEMOTION:
+			if (m_pScene->m_pUI)
+			{
+				SDL_Point p;
+				p.x = e.motion.x;
+				p.y = e.motion.y;
+				m_pScene->m_pUI->OnMouseChanged(p, e.motion.state == SDL_PRESSED);
+			}
+			break;
 
-			case SDL_EventType::SDL_KEYDOWN:
-				// SWITCH_ON_KEY(e.key.keysym.scancode, true);
-				switch (e.key.keysym.scancode)
-				{
-					HANDLE_KEYS(true)
-				}
-				break;
-			case SDL_EventType::SDL_KEYUP:
-				// SWITCH_ON_KEY(e.key.keysym.scancode, false);
-				switch (e.key.keysym.scancode)
-				{
-					HANDLE_KEYS(false)
-				}
-				break;
+		case SDL_EventType::SDL_KEYDOWN:
+			// SWITCH_ON_KEY(e.key.keysym.scancode, true);
+			switch (e.key.keysym.scancode)
+			{
+				HANDLE_KEYS(true)
+			}
+			break;
+		case SDL_EventType::SDL_KEYUP:
+			// SWITCH_ON_KEY(e.key.keysym.scancode, false);
+			switch (e.key.keysym.scancode)
+			{
+				HANDLE_KEYS(false)
+			}
+			break;
 		}
 	}
 }

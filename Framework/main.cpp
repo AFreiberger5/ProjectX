@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
 		// testszene laden
 		//TestScene scene = TestScene(&s);
 		Scene1 scene = Scene1(&s);
+
 		s.changeScene(&scene);
 
 		// programm ausfuehren
