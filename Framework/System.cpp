@@ -32,7 +32,7 @@ bool System::init()
 	HANDLE_ERROR(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 2048) < 0);
 
 	m_pWindow = SDL_CreateWindow(
-		"Hello SDL World!",		// Titel des Fensters
+		"Kevin alone in Space (with Mattis and Pit)",		// Titel des Fensters
 		SDL_WINDOWPOS_CENTERED,	// Fenster Horizontal Zentrieren
 		SDL_WINDOWPOS_CENTERED, // Fenster Vertikal Zentrieren
 		800,					// Breite

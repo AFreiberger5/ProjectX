@@ -68,11 +68,7 @@ void Scene1::load(Renderer* _pRenderer)
 {
 	m_pFont = new Font(getAssetPath("Fonts/comic.ttf").c_str(), 16);
 
-
-
-
-
-
+	
 	m_pUI = new UI();
 
 	SDL_Color col;
@@ -120,7 +116,7 @@ void Scene1::unload()
 	EntityList toRemove = m_entitiesToRender;
 	for each (Entity* pEntity in toRemove)
 	{
-		RemoveEntity(pEntity);
+		RemoveEntity(pEntity,true);
 		delete pEntity;
 	}
 

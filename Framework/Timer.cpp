@@ -17,6 +17,7 @@ void Timer::Start()
 void Timer::Stop()
 {
 	m_ticks = 0;
+	
 }
 
 void Timer::Restart()

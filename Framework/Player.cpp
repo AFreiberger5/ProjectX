@@ -59,11 +59,7 @@ void Player::Update(Uint32 _dt)
 			std::cout << " KAFFE KEVIN ANGRY!!!" << std::endl;
 		}
 		
-		
-
-		
-
-		
+				
 
 	}*/
 
@@ -74,8 +70,8 @@ void Player::OnCollision(Entity * _other)
 {
 	if (Enemy* eny = dynamic_cast<Enemy*>(_other))
 	{
-		m_currentScene->RemoveEntity(this);
-
+		m_currentScene->RemoveEntity(this,true);
+		
 
 	}
 }

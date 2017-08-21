@@ -22,6 +22,7 @@ public:
 
 	virtual void load(Renderer* _pRenderer) override;
 	virtual void unload() override;
+	int m_iii;
 
 protected:
 	Texture* m_pHello;
@@ -53,5 +54,5 @@ protected:
 	SDL_Rect boundsPit;
 
 	Timer WinTimer;
-
+	bool BossTriggered = false;
 };

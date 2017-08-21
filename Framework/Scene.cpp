@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include "Entity.h"
 #include "UI.h"
+#include "Enemy.h"
 
 Scene::Scene(System* _pSystem)
 	: m_pSystem(_pSystem)
@@ -15,57 +16,27 @@ Scene::~Scene()
 void Scene::render(Renderer* _pRenderer)
 {
 	for (auto itr = m_entitiesToRender.begin();
-			itr != m_entitiesToRender.end();
-			++itr)
+		itr != m_entitiesToRender.end();
+		++itr)
 	{
 		(*itr)->Render(_pRenderer, m_offset);
 	}
 
-	if(m_pUI != nullptr)
+	if (m_pUI != nullptr)
 		m_pUI->Render(_pRenderer);
 }
 
 void Scene::update(Uint32 _dt)
 {
 	for (auto itr = m_entitiesToUpdate.begin();
-			itr != m_entitiesToUpdate.end();
-			++itr)
+		itr != m_entitiesToUpdate.end();
+		++itr)
 	{
 		(*itr)->Update(_dt);
 	}
 
 	CheckCollisions();
-
-	for (auto itr = m_entitiesToAdd.begin();
-		itr != m_entitiesToAdd.end();
-		++itr)
-	{
-		m_entitiesToRender.push_back(*itr);
-
-		if ((*itr)->HasFlag(EntityFlags::SHOULD_UPDATE))
-			m_entitiesToUpdate.push_back(*itr);
-
-		if ((*itr)->HasFlag(EntityFlags::CAN_COLLIDE))
-			m_entitiesToCollide.push_back(*itr);
-		(*itr)->SetScene(this);
-	}
-
-	for (auto itr = m_entitiesToRemove.begin();
-		itr != m_entitiesToRemove.end();
-		++itr)
-	{
-		m_entitiesToRender.remove(*itr);
-
-		if ((*itr)->HasFlag(EntityFlags::SHOULD_UPDATE))
-			m_entitiesToUpdate.remove(*itr);
-
-		if ((*itr)->HasFlag(EntityFlags::CAN_COLLIDE))
-			m_entitiesToCollide.remove(*itr);
-		(*itr)->SetScene(this);
-
-	}
-	m_entitiesToRemove.clear();
-	m_entitiesToAdd.clear();
+	HandleEntitiyChanges();
 }
 
 void Scene::CheckCollisions()
@@ -99,20 +70,54 @@ void Scene::unload()
 	EntityList toRemove = m_entitiesToRender;
 	for each (Entity* pEntity in toRemove)
 	{
-		RemoveEntity(pEntity);
+		RemoveEntity(pEntity,true);
 		delete pEntity;
 	}
 }
 
 void Scene::AddEntity(Entity* _pEntity)
 {
-	m_entitiesToAdd.push_back(_pEntity);
+	
+	EntityChange change;
+	change.Mode = 1;
+	change.pEntity = _pEntity;
+
+	m_entitiesToChange.push_back(change);
 }
 
-void Scene::RemoveEntity(Entity* _pEntity)
+void Scene::RemoveEntity(Entity* _pEntity, bool _delete)
+ {
+	EntityChange change;
+	change.Mode = _delete ? 3 : 2;
+	change.pEntity = _pEntity;
+
+	m_entitiesToChange.push_back(change);
+}
+
+void Scene::HandleEntitiyChanges()
 {
-	m_entitiesToRemove.push_back(_pEntity);
-	//m_entitiesToRender.remove(_pEntity);
-	//m_entitiesToUpdate.remove(_pEntity);
-	//m_entitiesToCollide.remove(_pEntity);
+	for (auto it = m_entitiesToChange.begin(); it != m_entitiesToChange.end(); ++it)
+	{
+		if ((*it).Mode == 1)
+		{
+			m_entitiesToRender.push_back((*it).pEntity);
+
+			if ((*it).pEntity->HasFlag(EntityFlags::SHOULD_UPDATE))
+				m_entitiesToUpdate.push_back((*it).pEntity);
+
+			if ((*it).pEntity->HasFlag(EntityFlags::CAN_COLLIDE))
+				m_entitiesToCollide.push_back((*it).pEntity);
+		}
+		else
+		{
+			m_entitiesToRender.remove((*it).pEntity);
+			m_entitiesToUpdate.remove((*it).pEntity);
+			m_entitiesToCollide.remove((*it).pEntity);
+
+			if ((*it).Mode == 3)
+				delete (*it).pEntity;
+		}
+	}
+
+	m_entitiesToChange = std::list<EntityChange>();
 }

@@ -42,33 +42,63 @@ void TestScene::update(Uint32 _dt)
 
 #pragma region EnemySpawns
 
-	if (SpawnKevin.TicksTicked() >= 100)
+	if (SpawnKevin.TicksTicked() >= 500)
 	{
-		if (pKevin)
+		if (pKevin && BossTriggered == false)
 		{
-			AddEntity(new Enemy("Kevin", pKevin, boundsKevin, EntityFlags::BOTH));
-
+			int i = RandomI(1, 4);
+			if (i == 1)
+			{
+				boundsKevin.x = 200;
+				boundsKevin.y = 0;
+				AddEntity(new Enemy("Kevin1", pKevin, boundsKevin, EntityFlags::BOTH));
+			}
+			else if (i == 2)
+			{
+				boundsKevin.x = 0;
+				boundsKevin.y = 0;
+				AddEntity(new Enemy("Kevin2", pKevin, boundsKevin, EntityFlags::BOTH));
+			}
+			else
+			{
+				boundsKevin.x = 0;
+				boundsKevin.y = 500;
+				AddEntity(new Enemy("Kevin3", pKevin, boundsKevin, EntityFlags::BOTH));
+			}
 			SpawnKevin.Restart();
 		}
 
 	}
-	if (SpawnMattis.TicksTicked() >= 700)
+	if (SpawnMattis.TicksTicked() >= 1500)
 	{
-		if (pMattis)
+		if (pMattis && BossTriggered == false)
 		{
-			AddEntity(new Enemy("Mattis", pMattis, boundsMattis, EntityFlags::BOTH));
+			boundsMattis.x = -boundsMattis.w;
+			boundsMattis.y = 100;
+			AddEntity(new Enemy("Mattis1", pMattis, boundsMattis, EntityFlags::BOTH));
+
+			boundsMattis.x = 600;
+			boundsMattis.y = -boundsMattis.h;
+			AddEntity(new Enemy("Mattis2", pMattis, boundsMattis, EntityFlags::BOTH));
+
+			boundsMattis.x = boundsMattis.w + m_pFirst->m_allowBounds.w;
+			boundsMattis.y = 300;
+			AddEntity(new Enemy("Mattis3", pMattis, boundsMattis, EntityFlags::BOTH));
 
 			SpawnMattis.Restart();
 		}
 
 	}
-	if (SpawnPit.TicksTicked() >= 1000)
+	if (SpawnPit.TicksTicked() >= 2000)
 	{
-		if (pPit)
+		//BossTriggered = true;
+
+		if (pPit && BossTriggered == true && SpawnPit.TicksTicked() >= 50000 && SpawnPit.m_ticks != 0)
 		{
 			AddEntity(new Enemy("Pit", pPit, boundsPit, EntityFlags::BOTH));
+			SpawnPit.Stop();
 
-			SpawnPit.Restart();
+
 		}
 
 	}
@@ -86,7 +116,7 @@ void TestScene::update(Uint32 _dt)
 		if (m_pSpace2->GetBounds().y >= 600) {
 			m_pSpace2->GetBounds().y = m_pSpace1->GetBounds().y - 1024;
 		}
-			}
+	}
 #pragma endregion
 
 #pragma region Controlls
@@ -138,12 +168,12 @@ void TestScene::update(Uint32 _dt)
 #pragma endregion
 	Scene::update(_dt);
 
-	if (WinTimer.TicksTicked() >= 30000)
-	{
-		Scene2* _y = new Scene2(m_pSystem);
-		m_pSystem->changeScene(_y);
-		
-	}
+	//if (WinTimer.TicksTicked() >= 30000)
+	//{
+	//	Scene2* _y = new Scene2(m_pSystem);
+	//	m_pSystem->changeScene(_y);
+	//
+	//}
 }
 
 //void TestScene::render(Renderer* _pRenderer)
@@ -160,25 +190,13 @@ void TestScene::load(Renderer* _pRenderer)
 #pragma region EnemySection
 	//Enemy section
 
-	boundsKevin.x = -50;
-	boundsKevin.y = 200;
-	boundsKevin.w = 200;
-	boundsKevin.h = 200;
+	boundsKevin.w = 64;
+	boundsKevin.h = 64;
 
-
-	boundsMattis.x = 0;
-	boundsMattis.y = 100;
-	boundsMattis.w = 100;
-	boundsMattis.h = 100;
-
-
-	boundsPit.x = 0;
-	boundsPit.y = 100;
-	boundsPit.w = 150;
-	boundsPit.h = 150;
+	boundsMattis.w = 128;
+	boundsMattis.h = 128;
 
 	pKevin = new Texture(_pRenderer, getAssetPath("Images/kevin.jpg").c_str());
-
 	pMattis = new Texture(_pRenderer, getAssetPath("Images/mattis.jpg").c_str());
 	pPit = new Texture(_pRenderer, getAssetPath("Images/pit.jpg").c_str());
 
@@ -232,16 +250,18 @@ void TestScene::load(Renderer* _pRenderer)
 	m_pFirst->m_allowBounds.y = 0;
 	m_pFirst->m_allowBounds.w = 800;
 	m_pFirst->m_allowBounds.h = 600;
+
+	boundsPit.x = 0;
+	boundsPit.w = (int)(((float)m_pFirst->m_allowBounds.w) / 1.1f);
+	boundsPit.h = m_pFirst->m_allowBounds.h;
+	boundsPit.y = -boundsPit.h;
+
 }
 
 void TestScene::unload()
 {
-	for each (Entity* pEntity in m_entitiesToAdd, m_entitiesToCollide, m_entitiesToRemove, m_entitiesToRender, m_entitiesToUpdate)
-	{
-		RemoveEntity(pEntity);
-		delete pEntity;
-	}
 	
+
 	SAFE_DELETE(pKevin);
 	SAFE_DELETE(pMattis);
 	SAFE_DELETE(pPit);
