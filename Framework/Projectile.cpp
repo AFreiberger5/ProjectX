@@ -24,6 +24,6 @@ void Projectile::Update(Uint32 _dt)
 	GetBounds().y -= _dt* m_Speed;
 	if (GetBounds().y <= -100)
 	{
-		
+		m_currentScene->RemoveEntity(this, true);
 	}
 }

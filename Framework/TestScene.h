@@ -23,8 +23,9 @@ public:
 
 	virtual void load(Renderer* _pRenderer) override;
 	virtual void unload() override;
-	void LoseLoad();
+	
 
+virtual void LoadLose(bool _lost) override;
 	int m_iii;
 
 protected:
@@ -59,6 +60,7 @@ protected:
 	SDL_Rect boundsMattis;
 	SDL_Rect boundsPit;
 	Mix_Chunk* m_pSwing;
+	Mix_Chunk* m_pPitEntry;
 	Mix_Chunk* m_pSwing2;
 	Timer WinTimer;
 	

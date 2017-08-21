@@ -2,6 +2,8 @@
 #include <iostream>
 #include "System.h"
 #include "Enemy.h"
+#include "Scene2.h"
+#include "TestScene.h"
 
 
 
@@ -71,8 +73,12 @@ void Player::OnCollision(Entity * _other)
 {
 	if (Enemy* eny = dynamic_cast<Enemy*>(_other))
 	{
-		m_currentScene->RemoveEntity(this,true);
+		m_Lose = true;
+		m_currentScene->LoadLose(m_Lose);
 		
 		m_loseTriggered = true;
+
+		m_currentScene->RemoveEntity(this,true);
+
 	}
 }

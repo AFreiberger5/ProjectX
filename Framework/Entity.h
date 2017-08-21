@@ -34,6 +34,7 @@ public:
 	SDL_Rect& GetBounds() { return m_bounds; }
 
 
+	Scene* m_currentScene;
 
 protected:
 	const char* m_name;
@@ -41,5 +42,4 @@ protected:
 	IRenderable* m_pRenderable;
 
 	SDL_Rect m_bounds;
-	Scene* m_currentScene;
 };

@@ -1,3 +1,4 @@
+#include "Scene3.h"
 #include "TestScene.h"
 #include "Scene2.h"
 #include "System.h"
@@ -106,6 +107,9 @@ void TestScene::update(Uint32 _dt)
 
 		if (pPit && BossTriggered == true && SpawnPit.TicksTicked() >= 38000 && SpawnPit.m_ticks != 0)
 		{
+			m_pPitEntry = Mix_LoadWAV(getAssetPath("Sounds/mp3loop.mp3").c_str());
+			Mix_PlayChannel(-1, m_pPitEntry, 1);
+
 			if (RandomI(1, 3) == 2)
 				boundsPit.w / 10;
 
@@ -168,7 +172,10 @@ void TestScene::update(Uint32 _dt)
 			m_pBeamObject->m_allowBounds.y = 0;
 			m_pBeamObject->m_allowBounds.w = 800;
 			m_pBeamObject->m_allowBounds.h = 600;
+			if (m_pPlayer)
+			{
 			Mix_PlayChannel(-1, m_pSwing2, 1);
+			}
 			m_FireWaitingTime = 0;
 
 
@@ -180,10 +187,14 @@ void TestScene::update(Uint32 _dt)
 #pragma endregion
 	Scene::update(_dt);
 
-	if (WinTimer.TicksTicked() >= 45000)
+	
+
+
+	if (WinTimer.TicksTicked() >= 49000)
 	{
-		Scene2* _y = new Scene2(m_pSystem);
+		Scene3* _y = new Scene3(m_pSystem);
 		m_pSystem->changeScene(_y);
+	
 
 	}
 }
@@ -215,9 +226,9 @@ void TestScene::load(Renderer* _pRenderer)
 	boundsAndre.h = 141;
 
 
-	pKevin = new Texture(_pRenderer, getAssetPath("Images/kevin.jpg").c_str());
-	pMattis = new Texture(_pRenderer, getAssetPath("Images/mattis.jpg").c_str());
-	pPit = new Texture(_pRenderer, getAssetPath("Images/pit.jpg").c_str());
+	pKevin = new Texture(_pRenderer, getAssetPath("Images/kevin.png").c_str());
+	pMattis = new Texture(_pRenderer, getAssetPath("Images/mattis.png").c_str());
+	pPit = new Texture(_pRenderer, getAssetPath("Images/pit.png").c_str());
 	pAndre = new Texture(_pRenderer, getAssetPath("Images/Andre.png").c_str());
 
 
@@ -270,7 +281,7 @@ void TestScene::load(Renderer* _pRenderer)
 	m_pFirst->m_allowBounds.w = 800;
 	m_pFirst->m_allowBounds.h = 600;
 
-	boundsPit.w = (int)(((float)m_pFirst->m_allowBounds.w) / 1.1f);
+	boundsPit.w = (int)(((float)m_pFirst->m_allowBounds.w) / 1.2f);
 	boundsPit.h = (int)(((float)m_pFirst->m_allowBounds.h) / 0.7f);
 	boundsPit.x = 0;
 	boundsPit.y = -boundsPit.h;
@@ -287,10 +298,34 @@ void TestScene::unload()
 	SAFE_DELETE(m_pBeam);
 	SAFE_DELETE(m_pPlayer);
 	SAFE_DELETE(m_pFont);
-	//SAFE_DELETE(m_pSpace1);
-	//SAFE_DELETE(m_pSpace2);
+	SAFE_DELETE(m_pSpace1);
+	SAFE_DELETE(m_pSpace2);
+	if (m_pSwing)
+	{
+		Mix_FreeChunk(m_pSwing);
+		m_pSwing = nullptr;
+	}
+	if (m_pSwing2)
+	{
+		Mix_FreeChunk(m_pSwing2);
+		m_pSwing2 = nullptr;
+	}
+	if (m_pPitEntry)
+	{
+		Mix_FreeChunk(m_pPitEntry);
+		m_pPitEntry = nullptr;
+	}
 }
 
-void TestScene::LoseLoad()
+
+void TestScene::LoadLose(bool _lost)
 {
+	if (_lost == true)
+	{
+
+		Scene2* _y = new Scene2(m_pSystem);
+		m_pSystem->changeScene(_y);
+
+		
+	}
 }

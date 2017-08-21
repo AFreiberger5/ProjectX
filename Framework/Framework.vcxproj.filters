@@ -53,6 +53,9 @@
     <Filter Include="Scene2">
       <UniqueIdentifier>{b95491a8-2eee-4bcb-bb01-d4929057f808}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene3">
+      <UniqueIdentifier>{2c3ae54e-6a91-4162-ba3b-3d3f219ffb23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -114,6 +117,9 @@
     <ClCompile Include="Scene2.cpp">
       <Filter>Scene2</Filter>
     </ClCompile>
+    <ClCompile Include="Scene3.cpp">
+      <Filter>Scene3</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -170,6 +176,9 @@
     </ClInclude>
     <ClInclude Include="Scene2.h">
       <Filter>Scene2</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene3.h">
+      <Filter>Scene3</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

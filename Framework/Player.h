@@ -19,4 +19,8 @@ public:
 	SDL_Rect m_allowBounds;
 	bool m_loseTriggered = false;
 
+
+	bool m_Lose = false;
+
+
 };

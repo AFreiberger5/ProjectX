@@ -1,4 +1,6 @@
+#include "Scene3.h"
 #include "TestScene.h"
+#include "Scene2.h"
 #include "System.h"
 #include "Entity.h"
 #include "Player.h"
@@ -15,13 +17,16 @@
 #define CREATE_SPRITE_FROM_SHEET(SHEET, X, Y, W, H) new Sprite(SHEET, X * W, Y * H, W, H)
 #include <iostream>
 
-System s2;
 
+
+
+
+UIElement* pLabel;
 
 TestScene::TestScene(System* _pSystem)
 	: Scene(_pSystem)
 {
-	m_FireDelay = 200;
+	m_FireDelay = 400;
 	m_FireWaitingTime = 0;
 }
 
@@ -32,59 +37,98 @@ TestScene::~TestScene()
 
 void TestScene::update(Uint32 _dt)
 {
-	if (WinTimer.TicksTicked() >= 30000)
-	{
-		std::cout << "Kaffe Kevin sleepy, you win, now leave this place fool!" << std::endl;
-		s2.clean();
-	}
 
-
+	
 	m_FireWaitingTime += _dt;
 
 #pragma region EnemySpawns
 
-	if (SpawnKevin.TicksTicked() >= 100)
+	if (SpawnKevin.TicksTicked() >= 1500)
 	{
-		if (pKevin)
+		if (pKevin && BossTriggered == false)
 		{
-			AddEntity(new Enemy("Kevin", pKevin, boundsKevin, EntityFlags::BOTH));
-
+			int i = RandomI(1, 4);
+			if (i == 1)
+			{
+				boundsKevin.x = 200;
+				boundsKevin.y = 0;
+				AddEntity(new Enemy("Kevin1", pKevin, boundsKevin, EntityFlags::BOTH));
+			}
+			else if (i == 2)
+			{
+				boundsKevin.x = 0;
+				boundsKevin.y = 0;
+				AddEntity(new Enemy("Kevin2", pKevin, boundsKevin, EntityFlags::BOTH));
+			}
+			else
+			{
+				boundsKevin.x = 0;
+				boundsKevin.y = 400;
+				AddEntity(new Enemy("Kevin3", pKevin, boundsKevin, EntityFlags::BOTH));
+			}
 			SpawnKevin.Restart();
 		}
 
 	}
-	if (SpawnMattis.TicksTicked() >= 700)
+	if (SpawnMattis.TicksTicked() >= 2500)
 	{
-		if (pMattis)
+		if (pMattis && BossTriggered == false)
 		{
-			AddEntity(new Enemy("Mattis", pMattis, boundsMattis, EntityFlags::BOTH));
+			boundsMattis.x = -boundsMattis.w;
+			boundsMattis.y = 1;
+			AddEntity(new Enemy("Mattis1", pMattis, boundsMattis, EntityFlags::BOTH));
+
+			boundsMattis.x = 600;
+			boundsMattis.y = -boundsMattis.h;
+			AddEntity(new Enemy("Mattis2", pMattis, boundsMattis, EntityFlags::BOTH));
+
+			boundsMattis.x = boundsMattis.w + m_pFirst->m_allowBounds.w;
+			boundsMattis.y = 300;
+			AddEntity(new Enemy("Mattis3", pMattis, boundsMattis, EntityFlags::BOTH));
 
 			SpawnMattis.Restart();
 		}
 
 	}
-	if (SpawnPit.TicksTicked() >= 1000)
+	if (SpawnAndre.TicksTicked() >= 1900)
 	{
-		if (pPit)
+		if (pAndre && BossTriggered == false)
 		{
-			AddEntity(new Enemy("Pit", pPit, boundsPit, EntityFlags::BOTH));
+			boundsAndre.x = -boundsAndre.w;
+			boundsAndre.y = 100;
+			AddEntity(new Enemy("Andre", pAndre, boundsAndre, EntityFlags::BOTH));
+			SpawnAndre.Restart();
+		}
+	}
+	
+	if (SpawnPit.TicksTicked() >= 35000)
+	{
+		BossTriggered = true;
 
-			SpawnPit.Restart();
+		if (pPit && BossTriggered == true && SpawnPit.TicksTicked() >= 38000 && SpawnPit.m_ticks != 0)
+		{
+			if (RandomI(1, 3) == 2)
+				boundsPit.w / 10;
+
+			AddEntity(new Enemy("Pit", pPit, boundsPit, EntityFlags::BOTH));
+			SpawnPit.Stop();
 		}
 
 	}
 #pragma endregion
 
 #pragma region Backgroundmovement
-	m_pSpace1->GetBounds().y += _dt / 4;
-	m_pSpace2->GetBounds().y += _dt / 4;
+	if (m_pSpace1 && m_pSpace2 != nullptr) {
+		m_pSpace1->GetBounds().y += _dt / 4;
+		m_pSpace2->GetBounds().y += _dt / 4;
 
-	if (m_pSpace1->GetBounds().y >= 600) {
-		m_pSpace1->GetBounds().y = m_pSpace2->GetBounds().y - 1024;
-	}
+		if (m_pSpace1->GetBounds().y >= 600) {
+			m_pSpace1->GetBounds().y = m_pSpace2->GetBounds().y - 1024;
+		}
 
-	if (m_pSpace2->GetBounds().y >= 600) {
-		m_pSpace2->GetBounds().y = m_pSpace1->GetBounds().y - 1024;
+		if (m_pSpace2->GetBounds().y >= 600) {
+			m_pSpace2->GetBounds().y = m_pSpace1->GetBounds().y - 1024;
+		}
 	}
 #pragma endregion
 
@@ -113,7 +157,7 @@ void TestScene::update(Uint32 _dt)
 	{
 		if (m_FireWaitingTime >= m_FireDelay)
 		{
-			
+
 			boundsBeam.x = m_pFirst->GetBounds().x + 15;
 			boundsBeam.y = m_pFirst->GetBounds().y - 50;
 			boundsBeam.w = 80;
@@ -125,10 +169,13 @@ void TestScene::update(Uint32 _dt)
 			m_pBeamObject->m_allowBounds.y = 0;
 			m_pBeamObject->m_allowBounds.w = 800;
 			m_pBeamObject->m_allowBounds.h = 600;
-
+			if (m_pPlayer)
+			{
+			Mix_PlayChannel(-1, m_pSwing2, 1);
+			}
 			m_FireWaitingTime = 0;
 
-			
+
 		}
 
 
@@ -136,66 +183,75 @@ void TestScene::update(Uint32 _dt)
 
 #pragma endregion
 	Scene::update(_dt);
-}
 
-void TestScene::render(Renderer* _pRenderer)
-{
-	Scene::render(_pRenderer);
+	if (WinTimer.TicksTicked() >= 45000)
+	{
+		Scene2* _y = new Scene2(m_pSystem);
+		m_pSystem->changeScene(_y);
 
+
+	if (WinTimer.TicksTicked() >= 10000)
+	{
+		Scene3* _y = new Scene3(m_pSystem);
+		m_pSystem->changeScene(_y);
 	
+
+	}
 }
+
+//void TestScene::render(Renderer* _pRenderer)
+//{
+//	Scene::render(_pRenderer);
+//
+//
+//}
 
 void TestScene::load(Renderer* _pRenderer)
 {
-m_pFont = new Font(getAssetPath("Fonts/comic.ttf").c_str(), 12);
-	
+	m_pFont = new Font(getAssetPath("Fonts/comic.ttf").c_str(), 12);
+	m_pSwing = Mix_LoadWAV(getAssetPath("Sounds/mp3loop.mp3").c_str());
+	m_pSwing2 = Mix_LoadWAV(getAssetPath("Sounds/lazer.wav").c_str());
+	Mix_PlayChannel(-1, m_pSwing, 0);
+
 #pragma region EnemySection
 	//Enemy section
 
-	boundsKevin.x = -50;
-	boundsKevin.y = 200;
-	boundsKevin.w = 200;
-	boundsKevin.h = 200;
+	boundsKevin.w = 64;
+	boundsKevin.h = 64;
 
-	
-	boundsMattis.x = 0;
-	boundsMattis.y = 100;
-	boundsMattis.w = 100;
-	boundsMattis.h = 100;
+	boundsMattis.w = 128;
+	boundsMattis.h = 128;
 
-	
-	boundsPit.x = 0;
-	boundsPit.y = 100;
-	boundsPit.w = 150;
-	boundsPit.h = 150;
+	boundsAndre.w = 128;
+	boundsAndre.h = 141;
+
 
 	pKevin = new Texture(_pRenderer, getAssetPath("Images/kevin.jpg").c_str());
-
 	pMattis = new Texture(_pRenderer, getAssetPath("Images/mattis.jpg").c_str());
 	pPit = new Texture(_pRenderer, getAssetPath("Images/pit.jpg").c_str());
+	pAndre = new Texture(_pRenderer, getAssetPath("Images/Andre.png").c_str());
 
-	//AddEntity(new Enemy("Kevin", pKevin, boundsKevin, EntityFlags::SHOULD_UPDATE));
-	//AddEntity(new Enemy("Mattis", pMattis, boundsMattis, EntityFlags::SHOULD_UPDATE));
-	//AddEntity(new Enemy("Pit", pPit, boundsMattis, EntityFlags::SHOULD_UPDATE));
+
 
 	SpawnPit.Start();
 	SpawnKevin.Start();
 	SpawnMattis.Start();
+	SpawnAndre.Start();
 
 	WinTimer.Start();
 #pragma endregion
 
 #pragma region LevelSection
-	pSpace = new Texture(_pRenderer, getAssetPath("Images/space.png").c_str());
+	Texture* pSpace = new Texture(_pRenderer, getAssetPath("Images/space.png").c_str());
 
 
-	
+	SDL_Rect boundsBack1;
 	boundsBack1.w = 800;
 	boundsBack1.h = 1024;
 	boundsBack1.x = 0;
 	boundsBack1.y = -424;
 
-	
+	SDL_Rect boundsBack2;
 	boundsBack2.w = 800;
 	boundsBack2.h = 1024;
 	boundsBack2.x = 0;
@@ -209,7 +265,6 @@ m_pFont = new Font(getAssetPath("Fonts/comic.ttf").c_str(), 12);
 	m_pPlayer = new Texture(_pRenderer, getAssetPath("Images/Player.png").c_str());
 
 
-
 	SDL_Rect boundsPlayer;
 	boundsPlayer.x = 350;
 	boundsPlayer.y = 600;
@@ -220,14 +275,33 @@ m_pFont = new Font(getAssetPath("Fonts/comic.ttf").c_str(), 12);
 
 	AddEntity(m_pFirst = new Player("Player", m_pPlayer, boundsPlayer, EntityFlags::CAN_COLLIDE));
 
+
 	m_pFirst->m_allowBounds.x = 0;
 	m_pFirst->m_allowBounds.y = 0;
 	m_pFirst->m_allowBounds.w = 800;
 	m_pFirst->m_allowBounds.h = 600;
+
+	boundsPit.w = (int)(((float)m_pFirst->m_allowBounds.w) / 1.1f);
+	boundsPit.h = (int)(((float)m_pFirst->m_allowBounds.h) / 0.7f);
+	boundsPit.x = 0;
+	boundsPit.y = -boundsPit.h;
+
 }
 
 void TestScene::unload()
 {
-	SAFE_DELETE(m_pSpace1);
-	SAFE_DELETE(m_pSpace2);
+
+
+	SAFE_DELETE(pKevin);
+	SAFE_DELETE(pMattis);
+	SAFE_DELETE(pPit);
+	SAFE_DELETE(m_pBeam);
+	SAFE_DELETE(m_pPlayer);
+	SAFE_DELETE(m_pFont);
+	//SAFE_DELETE(m_pSpace1);
+	//SAFE_DELETE(m_pSpace2);
+}
+
+void TestScene::LoseLoad()
+{
 }

@@ -189,6 +189,7 @@ xcopy /d /y "$(SolutionDir)Libraries\SDL_ttf\lib\$(PlatformShortName)\*.dll" "$(
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Scene1.cpp" />
     <ClCompile Include="Scene2.cpp" />
+    <ClCompile Include="Scene3.cpp" />
     <ClCompile Include="System.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -210,6 +211,7 @@ xcopy /d /y "$(SolutionDir)Libraries\SDL_ttf\lib\$(PlatformShortName)\*.dll" "$(
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Scene1.h" />
     <ClInclude Include="Scene2.h" />
+    <ClInclude Include="Scene3.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Texture.h" />

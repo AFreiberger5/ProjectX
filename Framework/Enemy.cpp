@@ -76,7 +76,8 @@ void Enemy::Update(Uint32 _dt)
 		m_bounds.y += _dt / RandomI(4, 15);
 		m_bounds.x += _dt / RandomI(4, 15);
 	}
-
+	if(GetBounds().y <= -1000 | GetBounds().x <= -1000 | GetBounds().x >= 1000 | GetBounds().y >= 1000)
+		m_currentScene->RemoveEntity(this, true);
 
 }
 
@@ -92,8 +93,11 @@ void Enemy::OnCollision(Entity* _other)
 		}
 
 		else
+		{
 			m_currentScene->RemoveEntity(this, true);
-
+		}
+		
+		//_other->m_currentScene->RemoveEntity(this, true);
 
 	}
 }

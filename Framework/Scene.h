@@ -31,7 +31,7 @@ public:
 	virtual void render(Renderer* _pRenderer);
 	virtual void update(Uint32 _dt);
 	virtual void CheckCollisions();
-
+	virtual void LoadLose(bool _lost) {};
 	virtual void load(Renderer* _pRenderer);
 	virtual void unload();
 
