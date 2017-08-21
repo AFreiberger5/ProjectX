@@ -17,6 +17,6 @@ public:
 	virtual void OnCollision(Entity* _other) override;
 
 	SDL_Rect m_allowBounds;
-	bool LoseTriggered = false;
+	bool m_loseTriggered = false;
 
 };

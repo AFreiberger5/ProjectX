@@ -3,7 +3,8 @@
 #include "System.h"
 #include "Enemy.h"
 
-System s;
+
+
 
 Player::Player(const char* _name,
 	IRenderable* _pRenderable,
@@ -50,9 +51,9 @@ void Player::Update(Uint32 _dt)
 
 	/*if (GetBounds().x <= 400 && GetBounds().y <= 400)
 	{
-		if (!LoseTriggered)
+		if (!m_loseTriggered)
 		{
-			LoseTriggered = true;
+			m_loseTriggered = true;
 
 			s.clean();
 
@@ -63,7 +64,7 @@ void Player::Update(Uint32 _dt)
 
 	}*/
 
-
+	
 }
 
 void Player::OnCollision(Entity * _other)
@@ -72,6 +73,6 @@ void Player::OnCollision(Entity * _other)
 	{
 		m_currentScene->RemoveEntity(this,true);
 		
-
+		m_loseTriggered = true;
 	}
 }

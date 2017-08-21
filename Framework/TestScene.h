@@ -2,6 +2,7 @@
 #include "Timer.h"
 #include "Scene.h"
 #include "Projectile.h"
+#include "Player.h"
 
 class Player;
 class Font;
@@ -22,6 +23,8 @@ public:
 
 	virtual void load(Renderer* _pRenderer) override;
 	virtual void unload() override;
+	void LoseLoad();
+
 	int m_iii;
 
 protected:
@@ -44,16 +47,20 @@ protected:
 	SDL_Rect boundsBeam;
 
 	Texture* pKevin;
+	Texture* pAndre;
 	Texture* pMattis;
 	Texture* pPit;
 	Timer SpawnKevin;
+	Timer SpawnAndre;
 	Timer SpawnMattis;
 	Timer SpawnPit;
 	SDL_Rect boundsKevin;
+	SDL_Rect boundsAndre;
 	SDL_Rect boundsMattis;
 	SDL_Rect boundsPit;
 	Mix_Chunk* m_pSwing;
 	Mix_Chunk* m_pSwing2;
 	Timer WinTimer;
+	
 	bool BossTriggered = false;
 };

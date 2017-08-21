@@ -25,7 +25,7 @@ UIElement* pLabel;
 TestScene::TestScene(System* _pSystem)
 	: Scene(_pSystem)
 {
-	m_FireDelay = 1000;
+	m_FireDelay = 400;
 	m_FireWaitingTime = 0;
 }
 
@@ -37,12 +37,12 @@ TestScene::~TestScene()
 void TestScene::update(Uint32 _dt)
 {
 
-
+	
 	m_FireWaitingTime += _dt;
 
 #pragma region EnemySpawns
 
-	if (SpawnKevin.TicksTicked() >= 500)
+	if (SpawnKevin.TicksTicked() >= 1500)
 	{
 		if (pKevin && BossTriggered == false)
 		{
@@ -62,19 +62,19 @@ void TestScene::update(Uint32 _dt)
 			else
 			{
 				boundsKevin.x = 0;
-				boundsKevin.y = 500;
+				boundsKevin.y = 400;
 				AddEntity(new Enemy("Kevin3", pKevin, boundsKevin, EntityFlags::BOTH));
 			}
 			SpawnKevin.Restart();
 		}
 
 	}
-	if (SpawnMattis.TicksTicked() >= 1500)
+	if (SpawnMattis.TicksTicked() >= 2500)
 	{
 		if (pMattis && BossTriggered == false)
 		{
 			boundsMattis.x = -boundsMattis.w;
-			boundsMattis.y = 100;
+			boundsMattis.y = 1;
 			AddEntity(new Enemy("Mattis1", pMattis, boundsMattis, EntityFlags::BOTH));
 
 			boundsMattis.x = 600;
@@ -89,16 +89,28 @@ void TestScene::update(Uint32 _dt)
 		}
 
 	}
-	if (SpawnPit.TicksTicked() >= 2000)
+	if (SpawnAndre.TicksTicked() >= 1900)
 	{
-		//BossTriggered = true;
-
-		if (pPit && BossTriggered == true && SpawnPit.TicksTicked() >= 50000 && SpawnPit.m_ticks != 0)
+		if (pAndre && BossTriggered == false)
 		{
+			boundsAndre.x = -boundsAndre.w;
+			boundsAndre.y = 100;
+			AddEntity(new Enemy("Andre", pAndre, boundsAndre, EntityFlags::BOTH));
+			SpawnAndre.Restart();
+		}
+	}
+	
+	if (SpawnPit.TicksTicked() >= 35000)
+	{
+		BossTriggered = true;
+
+		if (pPit && BossTriggered == true && SpawnPit.TicksTicked() >= 38000 && SpawnPit.m_ticks != 0)
+		{
+			if (RandomI(1, 3) == 2)
+				boundsPit.w / 10;
+
 			AddEntity(new Enemy("Pit", pPit, boundsPit, EntityFlags::BOTH));
 			SpawnPit.Stop();
-
-
 		}
 
 	}
@@ -168,12 +180,12 @@ void TestScene::update(Uint32 _dt)
 #pragma endregion
 	Scene::update(_dt);
 
-	//if (WinTimer.TicksTicked() >= 30000)
-	//{
-	//	Scene2* _y = new Scene2(m_pSystem);
-	//	m_pSystem->changeScene(_y);
-	//
-	//}
+	if (WinTimer.TicksTicked() >= 45000)
+	{
+		Scene2* _y = new Scene2(m_pSystem);
+		m_pSystem->changeScene(_y);
+
+	}
 }
 
 //void TestScene::render(Renderer* _pRenderer)
@@ -199,17 +211,21 @@ void TestScene::load(Renderer* _pRenderer)
 	boundsMattis.w = 128;
 	boundsMattis.h = 128;
 
+	boundsAndre.w = 128;
+	boundsAndre.h = 141;
+
+
 	pKevin = new Texture(_pRenderer, getAssetPath("Images/kevin.jpg").c_str());
 	pMattis = new Texture(_pRenderer, getAssetPath("Images/mattis.jpg").c_str());
 	pPit = new Texture(_pRenderer, getAssetPath("Images/pit.jpg").c_str());
+	pAndre = new Texture(_pRenderer, getAssetPath("Images/Andre.png").c_str());
 
-	//AddEntity(new Enemy("Kevin", pKevin, boundsKevin, EntityFlags::SHOULD_UPDATE));
-	//AddEntity(new Enemy("Mattis", pMattis, boundsMattis, EntityFlags::SHOULD_UPDATE));
-	//AddEntity(new Enemy("Pit", pPit, boundsMattis, EntityFlags::SHOULD_UPDATE));
+
 
 	SpawnPit.Start();
 	SpawnKevin.Start();
 	SpawnMattis.Start();
+	SpawnAndre.Start();
 
 	WinTimer.Start();
 #pragma endregion
@@ -254,16 +270,16 @@ void TestScene::load(Renderer* _pRenderer)
 	m_pFirst->m_allowBounds.w = 800;
 	m_pFirst->m_allowBounds.h = 600;
 
-	boundsPit.x = 0;
 	boundsPit.w = (int)(((float)m_pFirst->m_allowBounds.w) / 1.1f);
-	boundsPit.h = m_pFirst->m_allowBounds.h;
+	boundsPit.h = (int)(((float)m_pFirst->m_allowBounds.h) / 0.7f);
+	boundsPit.x = 0;
 	boundsPit.y = -boundsPit.h;
 
 }
 
 void TestScene::unload()
 {
-	
+
 
 	SAFE_DELETE(pKevin);
 	SAFE_DELETE(pMattis);
@@ -273,4 +289,8 @@ void TestScene::unload()
 	SAFE_DELETE(m_pFont);
 	//SAFE_DELETE(m_pSpace1);
 	//SAFE_DELETE(m_pSpace2);
+}
+
+void TestScene::LoseLoad()
+{
 }

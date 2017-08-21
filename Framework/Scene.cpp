@@ -101,6 +101,7 @@ void Scene::HandleEntitiyChanges()
 		if ((*it).Mode == 1)
 		{
 			m_entitiesToRender.push_back((*it).pEntity);
+			(*it).pEntity->SetScene(this);
 
 			if ((*it).pEntity->HasFlag(EntityFlags::SHOULD_UPDATE))
 				m_entitiesToUpdate.push_back((*it).pEntity);

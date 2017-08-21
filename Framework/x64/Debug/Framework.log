@@ -1,6 +1,7 @@
 ﻿  TestScene.cpp
-  Framework.vcxproj -> C:\Users\janbl\Documents\ProjectX\Build\bin\x64\Framework.exe
-  Framework.vcxproj -> C:\Users\janbl\Documents\ProjectX\Build\bin\x64\Framework.pdb (Partial PDB)
+c:\users\alexander\documents\projectx\framework\testscene.cpp(110): warning C4552: '/': operator has no effect; expected operator with side-effect
+  Framework.vcxproj -> C:\Users\Alexander\Documents\ProjectX\Build\bin\x64\Framework.exe
+  Framework.vcxproj -> C:\Users\Alexander\Documents\ProjectX\Build\bin\x64\Framework.pdb (Partial PDB)
   0 Datei(en) kopiert
   0 Datei(en) kopiert
   0 Datei(en) kopiert
