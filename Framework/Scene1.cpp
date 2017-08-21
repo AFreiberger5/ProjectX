@@ -40,8 +40,9 @@ void Scene1::update(Uint32 _dt)
 	if (m_pSystem->IsKeyPressed(Key::RETURN))
 	{
 		TestScene* _x =new  TestScene(m_pSystem);
-		m_pSystem->m_pScene = _x;
+		//m_pSystem->m_pScene = _x;
 		m_pSystem->changeScene(_x);
+		
 		//Old Scene still needs to be deleted
 	}
 
