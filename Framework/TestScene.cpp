@@ -1,3 +1,4 @@
+#include "Scene3.h"
 #include "TestScene.h"
 #include "Scene2.h"
 #include "System.h"
@@ -156,7 +157,10 @@ void TestScene::update(Uint32 _dt)
 			m_pBeamObject->m_allowBounds.y = 0;
 			m_pBeamObject->m_allowBounds.w = 800;
 			m_pBeamObject->m_allowBounds.h = 600;
+			if (m_pPlayer)
+			{
 			Mix_PlayChannel(-1, m_pSwing2, 1);
+			}
 			m_FireWaitingTime = 0;
 
 
@@ -167,13 +171,14 @@ void TestScene::update(Uint32 _dt)
 
 #pragma endregion
 	Scene::update(_dt);
+	
 
-	//if (WinTimer.TicksTicked() >= 30000)
-	//{
-	//	Scene2* _y = new Scene2(m_pSystem);
-	//	m_pSystem->changeScene(_y);
-	//
-	//}
+	if (WinTimer.TicksTicked() >= 10000)
+	{
+		Scene3* _y = new Scene3(m_pSystem);
+		m_pSystem->changeScene(_y);
+	
+	}
 }
 
 //void TestScene::render(Renderer* _pRenderer)
@@ -273,4 +278,13 @@ void TestScene::unload()
 	SAFE_DELETE(m_pFont);
 	//SAFE_DELETE(m_pSpace1);
 	//SAFE_DELETE(m_pSpace2);
+}
+
+void TestScene::LoadLose(bool _lost)
+{
+	if (_lost == true)
+	{
+		Scene2* _y = new Scene2(m_pSystem);
+		m_pSystem->changeScene(_y);
+	}
 }

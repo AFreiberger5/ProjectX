@@ -2,6 +2,7 @@
 #include "Timer.h"
 #include "Scene.h"
 #include "Projectile.h"
+#include "Player.h"
 
 class Player;
 class Font;
@@ -22,6 +23,7 @@ public:
 
 	virtual void load(Renderer* _pRenderer) override;
 	virtual void unload() override;
+	virtual void LoadLose(bool _lost) override;
 	int m_iii;
 
 protected:

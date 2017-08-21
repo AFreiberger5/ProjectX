@@ -2,6 +2,8 @@
 #include <iostream>
 #include "System.h"
 #include "Enemy.h"
+#include "Scene2.h"
+#include "TestScene.h"
 
 System s;
 
@@ -11,7 +13,9 @@ Player::Player(const char* _name,
 	EntityFlags _flags)
 	: Entity(_name, _pRenderable, _bounds, (EntityFlags)(_flags | EntityFlags::SHOULD_UPDATE))
 {
+
 }
+
 
 Player::~Player()
 {
@@ -50,9 +54,9 @@ void Player::Update(Uint32 _dt)
 
 	/*if (GetBounds().x <= 400 && GetBounds().y <= 400)
 	{
-		if (!LoseTriggered)
+		if (!m_Lose)
 		{
-			LoseTriggered = true;
+			m_Lose = true;
 
 			s.clean();
 
@@ -70,8 +74,9 @@ void Player::OnCollision(Entity * _other)
 {
 	if (Enemy* eny = dynamic_cast<Enemy*>(_other))
 	{
-		m_currentScene->RemoveEntity(this,true);
+		m_Lose = true;
+		m_currentScene->LoadLose(m_Lose);
 		
-
+		m_currentScene->RemoveEntity(this,true);
 	}
 }

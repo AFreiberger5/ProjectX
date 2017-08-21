@@ -1,4 +1,20 @@
-﻿  TestScene.cpp
+﻿  Player.cpp
+  Generating Code...
+  Compiling...
+  main.cpp
+  TestScene.cpp
+  System.cpp
+  Scene3.cpp
+  Scene2.cpp
+  Scene1.cpp
+  Scene.cpp
+  Projectile.cpp
+  Enemy.cpp
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  Level.cpp
+  Entity.cpp
+  DebugOverlay.cpp
   Framework.vcxproj -> C:\Users\janbl\Documents\ProjectX\Build\bin\x64\Framework.exe
   Framework.vcxproj -> C:\Users\janbl\Documents\ProjectX\Build\bin\x64\Framework.pdb (Partial PDB)
   0 Datei(en) kopiert
