@@ -1,28 +1,6 @@
-﻿  main.cpp
-  common.cpp
-c:\users\adi\desktop\project x 2.1\framework\common.cpp(29): warning C4244: "Argument": Konvertierung von "time_t" in "unsigned int", möglicher Datenverlust
-c:\users\adi\desktop\project x 2.1\framework\common.cpp(36): warning C4244: "Argument": Konvertierung von "time_t" in "unsigned int", möglicher Datenverlust
-  UI.cpp
-  Timer.cpp
-  Texture.cpp
-  TestScene.cpp
-  System.cpp
-  Scene2.cpp
-  Scene1.cpp
-  Scene.cpp
-  Renderer.cpp
-  Projectile.cpp
-  Player.cpp
-  Level.cpp
-  Label.cpp
-  Font.cpp
-  Entity.cpp
-  Enemy.cpp
-  DebugOverlay.cpp
-  Button.cpp
-  Code wird generiert...
-  Framework.vcxproj -> C:\Users\Adi\Desktop\Project X 2.1\Build\bin\x64\Framework.exe
-  Framework.vcxproj -> C:\Users\Adi\Desktop\Project X 2.1\Build\bin\x64\Framework.pdb (Partial PDB)
+﻿  Scene1.cpp
+  Framework.vcxproj -> E:\GIT_DEV\ProjectX\Build\bin\x64\Framework.exe
+  Framework.vcxproj -> E:\GIT_DEV\ProjectX\Build\bin\x64\Framework.pdb (Partial PDB)
   0 Datei(en) kopiert
   0 Datei(en) kopiert
   0 Datei(en) kopiert
