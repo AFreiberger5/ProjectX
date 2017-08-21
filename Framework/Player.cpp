@@ -22,13 +22,6 @@ Player::~Player()
 
 void Player::Update(Uint32 _dt)
 {
-	// steuerung
-	// ggf. physik
-	// ..
-
-	// spieler in bounds halten
-
-
 	if (GetBounds().x < m_allowBounds.x)
 	{
 		GetBounds().x = m_allowBounds.x;
@@ -48,25 +41,6 @@ void Player::Update(Uint32 _dt)
 	{
 		GetBounds().y = m_allowBounds.y + m_allowBounds.h - GetBounds().h;
 	}
-
-	// Temporäre Verlustbedingugn
-
-	/*if (GetBounds().x <= 400 && GetBounds().y <= 400)
-	{
-		if (!m_loseTriggered)
-		{
-			m_loseTriggered = true;
-
-			s.clean();
-
-			std::cout << " KAFFE KEVIN ANGRY!!!" << std::endl;
-		}
-		
-				
-
-	}*/
-
-	
 }
 
 void Player::OnCollision(Entity * _other)
@@ -75,10 +49,7 @@ void Player::OnCollision(Entity * _other)
 	{
 		m_Lose = true;
 		m_currentScene->LoadLose(m_Lose);
-		
-		m_loseTriggered = true;
-
-		m_currentScene->RemoveEntity(this,true);
+		m_currentScene->RemoveEntity(this, true);
 
 	}
 }

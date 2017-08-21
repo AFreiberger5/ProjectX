@@ -34,8 +34,6 @@ Scene2::~Scene2()
 void Scene2::update(Uint32 _dt)
 {
 
-
-
 #pragma region Backgroundmovement
 	m_pSpace1->GetBounds().y += _dt / 4;
 	m_pSpace2->GetBounds().y += _dt / 4;
@@ -55,15 +53,13 @@ void Scene2::update(Uint32 _dt)
 	if (m_pSystem->IsKeyPressed(Key::RETURN))
 	{
 		TestScene* _x = new TestScene(m_pSystem);
-		//m_pSystem->m_pScene = _x;
 		m_pSystem->changeScene(_x);
-		
+
 	}
 
 	if (m_pSystem->IsKeyPressed(Key::ESC))
 	{
 		m_pSystem->clean();
-
 	}
 
 #pragma endregion
@@ -72,19 +68,15 @@ void Scene2::update(Uint32 _dt)
 void Scene2::render(Renderer* _pRenderer)
 {
 	Scene::render(_pRenderer);
-
-
 }
 
 void Scene2::load(Renderer* _pRenderer)
 {
 	m_pFont = new Font(getAssetPath("Fonts/comic.ttf").c_str(), 16);
 
-
 #pragma region LevelSection
 	Texture* pSpace = new Texture(_pRenderer, getAssetPath("Images/space.png").c_str());
-
-
+	
 	SDL_Rect boundsBack1;
 	boundsBack1.w = 800;
 	boundsBack1.h = 1024;
@@ -100,7 +92,6 @@ void Scene2::load(Renderer* _pRenderer)
 	AddEntity(m_pSpace1 = new Level("BackG1", pSpace, boundsBack1));
 	AddEntity(m_pSpace2 = new Level("BackG1", pSpace, boundsBack2));
 #pragma endregion
-
 
 	m_pUI = new UI();
 

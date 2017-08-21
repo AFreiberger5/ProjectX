@@ -47,23 +47,25 @@ class Image : public UIElement
 
 };
 
-class Button : public UIElement
-{
+// Messed around with buttons, didn't end up using one
 
-public:
-	Button(IRenderable* _pStandard, IRenderable* _pHover = nullptr, IRenderable* _pClicked = nullptr);
-
-	virtual void OnMouseChanged(SDL_Point _p, bool _click) override;
-	virtual void OnClick() = 0;
-	virtual void Render(Renderer* _pRenderer) override;
-
-private:
-	IRenderable* m_pStandard;
-	IRenderable* m_pHover;
-	IRenderable* m_pClicked;
-
-	int m_mode;
-};
+//class Button : public UIElement
+//{
+//
+//public:
+//	Button(IRenderable* _pStandard, IRenderable* _pHover = nullptr, IRenderable* _pClicked = nullptr);
+//
+//	virtual void OnMouseChanged(SDL_Point _p, bool _click) override;
+//	virtual void OnClick() = 0;
+//	virtual void Render(Renderer* _pRenderer) override;
+//
+//private:
+//	IRenderable* m_pStandard;
+//	IRenderable* m_pHover;
+//	IRenderable* m_pClicked;
+//
+//	int m_mode;
+//};
 
 typedef std::list<UIElement*> UIList;
 

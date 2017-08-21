@@ -31,28 +31,23 @@ Scene1::~Scene1()
 
 void Scene1::update(Uint32 _dt)
 {
-
-
-
-
+	
 #pragma region Controlls
 
 	if (m_pSystem->IsKeyPressed(Key::RETURN))
 	{
 		TestScene* _x =new  TestScene(m_pSystem);
-		//m_pSystem->m_pScene = _x;
+		
 		m_pSystem->changeScene(_x);
 		
-		//Old Scene still needs to be deleted
+		//We do have some things that don't get deleted when switching scenes, couldn't find out the issues
 	}
 
 	if (m_pSystem->IsKeyPressed(Key::ESC))
 	{
 		m_pSystem->clean();
 		
-		
 	}
-
 #pragma endregion
 	Scene::update(_dt);
 }
@@ -60,15 +55,11 @@ void Scene1::update(Uint32 _dt)
 void Scene1::render(Renderer* _pRenderer)
 {
 	Scene::render(_pRenderer);
-
-
 }
 
 void Scene1::load(Renderer* _pRenderer)
 {
-	m_pFont = new Font(getAssetPath("Fonts/comic.ttf").c_str(), 16);
-
-	
+	m_pFont = new Font(getAssetPath("Fonts/comic.ttf").c_str(), 16);	
 	m_pUI = new UI();
 
 	SDL_Color col;

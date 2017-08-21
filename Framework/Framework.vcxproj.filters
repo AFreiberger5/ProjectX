@@ -56,6 +56,9 @@
     <Filter Include="Scene3">
       <UniqueIdentifier>{2c3ae54e-6a91-4162-ba3b-3d3f219ffb23}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{b13f4d1c-ab9a-4929-841c-a46d72d5c2f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -102,9 +105,6 @@
     <ClCompile Include="Projectile.cpp">
       <Filter>Projectile</Filter>
     </ClCompile>
-    <ClCompile Include="UI.cpp">
-      <Filter>DebugOverlay</Filter>
-    </ClCompile>
     <ClCompile Include="Label.cpp">
       <Filter>DebugOverlay</Filter>
     </ClCompile>
@@ -119,6 +119,9 @@
     </ClCompile>
     <ClCompile Include="Scene3.cpp">
       <Filter>Scene3</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -168,9 +171,6 @@
     <ClInclude Include="Projectile.h">
       <Filter>Projectile</Filter>
     </ClInclude>
-    <ClInclude Include="UI.h">
-      <Filter>DebugOverlay</Filter>
-    </ClInclude>
     <ClInclude Include="Scene1.h">
       <Filter>Scene1</Filter>
     </ClInclude>
@@ -179,6 +179,9 @@
     </ClInclude>
     <ClInclude Include="Scene3.h">
       <Filter>Scene3</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -15,5 +15,4 @@ public:
 
 	virtual void Update(Uint32 _dt) override;
 	SDL_Rect m_allowBounds;
-
 };

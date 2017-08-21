@@ -32,7 +32,7 @@ bool System::init()
 	HANDLE_ERROR(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 2048) < 0);
 
 	m_pWindow = SDL_CreateWindow(
-		"Kevin alone in Space (with Mattis and Pit)",		// Titel des Fensters
+		"Kevin alone in Space (with Mattis, Andre and the big boss)",		// Titel des Fensters
 		SDL_WINDOWPOS_CENTERED,	// Fenster Horizontal Zentrieren
 		SDL_WINDOWPOS_CENTERED, // Fenster Vertikal Zentrieren
 		800,					// Breite
@@ -115,16 +115,15 @@ void System::clean()
 		m_pWindow = nullptr;
 	}
 
-	// SDL stoppen und aufraeumen
+	//We included this to clean up some parts of the scene when changing scenes, not everything gets deleted though
 	if (m_pScene)
 	{
 		m_pScene->unload();
 		m_pScene = nullptr;
 	}
 
-
+	// SDL stoppen und aufraeumen
 	SDL_Quit();
-
 
 }
 

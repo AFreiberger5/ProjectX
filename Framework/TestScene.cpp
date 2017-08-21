@@ -1,44 +1,37 @@
-#include "Scene3.h"
-#include "TestScene.h"
-#include "Scene2.h"
-#include "System.h"
-#include "Entity.h"
-#include "Player.h"
-#include "Font.h"
-#include "Texture.h"
-#include "Renderer.h"
-#include "Timer.h"
-#include "Enemy.h"
-#include "Sprite.h"
 #include "Animation.h"
-#include "UI.h"
+#include "Enemy.h"
+#include "Entity.h"
+#include "Font.h"
 #include "Level.h"
+#include "Player.h"
 #include "Projectile.h"
+#include "Renderer.h"
+#include "Scene2.h"
+#include "Scene3.h"
+#include "Sprite.h"
+#include "System.h"
+#include "TestScene.h"
+#include "Texture.h"
+#include "Timer.h"
+#include "UI.h"
 #define CREATE_SPRITE_FROM_SHEET(SHEET, X, Y, W, H) new Sprite(SHEET, X * W, Y * H, W, H)
 #include <iostream>
-
-
-
-
 
 UIElement* pLabel;
 
 TestScene::TestScene(System* _pSystem)
 	: Scene(_pSystem)
 {
-	m_FireDelay = 400;
+	m_FireDelay = 600;
 	m_FireWaitingTime = 0;
 }
 
 TestScene::~TestScene()
 {
-
 }
 
 void TestScene::update(Uint32 _dt)
 {
-
-	
 	m_FireWaitingTime += _dt;
 
 #pragma region EnemySpawns
@@ -100,18 +93,18 @@ void TestScene::update(Uint32 _dt)
 			SpawnAndre.Restart();
 		}
 	}
-	
+
 	if (SpawnPit.TicksTicked() >= 35000)
 	{
 		BossTriggered = true;
 
 		if (pPit && BossTriggered == true && SpawnPit.TicksTicked() >= 38000 && SpawnPit.m_ticks != 0)
 		{
-			m_pPitEntry = Mix_LoadWAV(getAssetPath("Sounds/mp3loop.mp3").c_str());
+			m_pPitEntry = Mix_LoadWAV(getAssetPath("Sounds/pitLaugh.mp3").c_str());
 			Mix_PlayChannel(-1, m_pPitEntry, 1);
 
 			if (RandomI(1, 3) == 2)
-				boundsPit.w / 10;
+				boundsPit.x += boundsPlayer.w * 2;
 
 			AddEntity(new Enemy("Pit", pPit, boundsPit, EntityFlags::BOTH));
 			SpawnPit.Stop();
@@ -174,37 +167,22 @@ void TestScene::update(Uint32 _dt)
 			m_pBeamObject->m_allowBounds.h = 600;
 			if (m_pPlayer)
 			{
-			Mix_PlayChannel(-1, m_pSwing2, 1);
+				Mix_PlayChannel(-1, m_pSwing2, 1);
 			}
 			m_FireWaitingTime = 0;
-
-
 		}
-
-
 	}
-
 #pragma endregion
+
 	Scene::update(_dt);
-
-	
-
 
 	if (WinTimer.TicksTicked() >= 49000)
 	{
+		WinTimer.Stop();
 		Scene3* _y = new Scene3(m_pSystem);
 		m_pSystem->changeScene(_y);
-	
-
 	}
 }
-
-//void TestScene::render(Renderer* _pRenderer)
-//{
-//	Scene::render(_pRenderer);
-//
-//
-//}
 
 void TestScene::load(Renderer* _pRenderer)
 {
@@ -214,7 +192,6 @@ void TestScene::load(Renderer* _pRenderer)
 	Mix_PlayChannel(-1, m_pSwing, 0);
 
 #pragma region EnemySection
-	//Enemy section
 
 	boundsKevin.w = 64;
 	boundsKevin.h = 64;
@@ -225,13 +202,10 @@ void TestScene::load(Renderer* _pRenderer)
 	boundsAndre.w = 128;
 	boundsAndre.h = 141;
 
-
 	pKevin = new Texture(_pRenderer, getAssetPath("Images/kevin.png").c_str());
 	pMattis = new Texture(_pRenderer, getAssetPath("Images/mattis.png").c_str());
 	pPit = new Texture(_pRenderer, getAssetPath("Images/pit.png").c_str());
 	pAndre = new Texture(_pRenderer, getAssetPath("Images/Andre.png").c_str());
-
-
 
 	SpawnPit.Start();
 	SpawnKevin.Start();
@@ -243,7 +217,6 @@ void TestScene::load(Renderer* _pRenderer)
 
 #pragma region LevelSection
 	Texture* pSpace = new Texture(_pRenderer, getAssetPath("Images/space.png").c_str());
-
 
 	SDL_Rect boundsBack1;
 	boundsBack1.w = 800;
@@ -264,23 +237,20 @@ void TestScene::load(Renderer* _pRenderer)
 	m_pBeam = new Texture(_pRenderer, getAssetPath("Images/beam.png").c_str());
 	m_pPlayer = new Texture(_pRenderer, getAssetPath("Images/Player.png").c_str());
 
-
-	SDL_Rect boundsPlayer;
 	boundsPlayer.x = 350;
 	boundsPlayer.y = 600;
 	boundsPlayer.w = 80;
 	boundsPlayer.h = 80;
 
-
-
 	AddEntity(m_pFirst = new Player("Player", m_pPlayer, boundsPlayer, EntityFlags::CAN_COLLIDE));
-
 
 	m_pFirst->m_allowBounds.x = 0;
 	m_pFirst->m_allowBounds.y = 0;
 	m_pFirst->m_allowBounds.w = 800;
 	m_pFirst->m_allowBounds.h = 600;
 
+
+	// The Final Boss has to be set later because his size is based around the player, player should only be able to get around him on one site
 	boundsPit.w = (int)(((float)m_pFirst->m_allowBounds.w) / 1.2f);
 	boundsPit.h = (int)(((float)m_pFirst->m_allowBounds.h) / 0.7f);
 	boundsPit.x = 0;
@@ -290,8 +260,6 @@ void TestScene::load(Renderer* _pRenderer)
 
 void TestScene::unload()
 {
-
-
 	SAFE_DELETE(pKevin);
 	SAFE_DELETE(pMattis);
 	SAFE_DELETE(pPit);
@@ -317,15 +285,11 @@ void TestScene::unload()
 	}
 }
 
-
 void TestScene::LoadLose(bool _lost)
 {
 	if (_lost == true)
 	{
-
 		Scene2* _y = new Scene2(m_pSystem);
 		m_pSystem->changeScene(_y);
-
-		
 	}
 }

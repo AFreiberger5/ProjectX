@@ -17,5 +17,4 @@ Level::~Level()
 
 void Level::Update(Uint32 _dt)
 {
-
 }

@@ -5,6 +5,15 @@
 #include "TestScene.h"
 #include "Texture.h"
 
+// Kommentar zur Projektaufteilung:
+// Hinweis, das war die grobe Aufteilung, wenn man grade eine Idee hatte oder schnell mit einbem teil fertig wurde,
+// wurde auch an anderen Teilen gearbeitet und über unser Gitrepo zusammengefügt, Anfängliche Aufteilung war wie folgt:
+//
+// Custovic war für Kollision, Player, Projektil zuständig
+// Bloomenkamp für Background/UI/Scenen
+// Freiberger für Enemies/Updates/Spielelogik
+// 
+
 int main(int argc, char *argv[])
 {
 	// System anlegen
@@ -13,8 +22,7 @@ int main(int argc, char *argv[])
 	// sdl starten und alle images laden
 	if (s.init() && s.load())
 	{
-		// testszene laden
-		//TestScene scene = TestScene(&s);
+	
 		Scene1 scene = Scene1(&s);
 
 		s.changeScene(&scene);

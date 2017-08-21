@@ -10,7 +10,6 @@ Entity::Entity(
 	EntityFlags _flags)
 	: m_name(_name), m_pRenderable(_pRenderable), m_bounds(_bounds), m_flags(_flags), Object()
 {
-	
 }
 
 Entity::~Entity()
@@ -23,7 +22,6 @@ void Entity::Render(Renderer* _pRenderer, SDL_Point _offset)
 	SDL_Rect bounds = SDL_Rect(m_bounds);
 	bounds.x -= _offset.x;
 	bounds.y -= _offset.y;
-
 	_pRenderer->Draw(m_pRenderable, bounds);
 }
 
@@ -47,5 +45,4 @@ bool Entity::HasFlag(EntityFlags _flag)
 void Entity::SetScene(Scene * _currentScene)
 {
 	m_currentScene = _currentScene;
-
 }
