@@ -52,7 +52,8 @@ protected:
 	SDL_Rect boundsKevin;
 	SDL_Rect boundsMattis;
 	SDL_Rect boundsPit;
-
+	Mix_Chunk* m_pSwing;
+	Mix_Chunk* m_pSwing2;
 	Timer WinTimer;
 	bool BossTriggered = false;
 };

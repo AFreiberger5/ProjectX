@@ -25,7 +25,7 @@ UIElement* pLabel;
 TestScene::TestScene(System* _pSystem)
 	: Scene(_pSystem)
 {
-	m_FireDelay = 200;
+	m_FireDelay = 1000;
 	m_FireWaitingTime = 0;
 }
 
@@ -156,7 +156,7 @@ void TestScene::update(Uint32 _dt)
 			m_pBeamObject->m_allowBounds.y = 0;
 			m_pBeamObject->m_allowBounds.w = 800;
 			m_pBeamObject->m_allowBounds.h = 600;
-
+			Mix_PlayChannel(-1, m_pSwing2, 1);
 			m_FireWaitingTime = 0;
 
 
@@ -186,6 +186,9 @@ void TestScene::update(Uint32 _dt)
 void TestScene::load(Renderer* _pRenderer)
 {
 	m_pFont = new Font(getAssetPath("Fonts/comic.ttf").c_str(), 12);
+	m_pSwing = Mix_LoadWAV(getAssetPath("Sounds/mp3loop.mp3").c_str());
+	m_pSwing2 = Mix_LoadWAV(getAssetPath("Sounds/lazer.wav").c_str());
+	Mix_PlayChannel(-1, m_pSwing, 0);
 
 #pragma region EnemySection
 	//Enemy section
